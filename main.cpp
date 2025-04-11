@@ -1,14 +1,21 @@
 #include <iostream>
+#include <iomanip>
 #include "save_load.h"
 #include "game_menu.h"
 using namespace std;
 
-// Initilise score variable
+// Initialise score variable
 int score = 0;
+
+// Initialise game over variable
+bool gameOver = false;
+
+// Difficulty variable
+string difficulty;
 
 // Variable (N x N) grid
 const int Size = 4;
-int grid[Size][Size] = {0};
+vector<vector<int>> grid = vector<vector<int>>(Size, vector<int>(Size, 0));
 
 // Checks if Merge is possible through comparing numbers
 bool CanMerge(int a, int b) {
@@ -151,6 +158,30 @@ void MoveDown() {
     }
 }
 
+bool nearbysamevalue(const vector<vector<int>> & grid, int x, int y) {
+    int boxvalue = grid[x][y];
+    if (x > 0 && grid[x-1][y] == boxvalue)
+        return true;
+    if (x < Size-1 && grid[x+1][y] == boxvalue)
+        return true;
+    if (y > 0 && grid[x][y-1] == boxvalue)
+        return true;
+    if (y < Size-1 && grid[x][y+1] == boxvalue)
+        return true;
+    return false;
+}
+
+bool allnotempty(const vector<vector<int>>& grid) {
+    for (int i = 0; i < Size; i++){
+       for (int j = 0; j < Size; j++){
+           if (grid[i][j] == 0){
+               return false;
+                   }
+       }
+    }
+    return true;
+}
+
 void addrandom() {
     vector<pair<int, int>> emptyblock;
     for (int i = 0; i < Size; i++){
@@ -184,25 +215,88 @@ void addrandom() {
        }
     }         
 }
-bool nearbysamevalue(const vector<vector<int>> & grid, int x, int y) {
-    int boxvalue = grid[x][y];
-    if (x > 0 && grid[x-1][y] == boxvalue)
-        return true;
-    if (x < Size-1 && grid[x+1][y] == boxvalue)
-        return true;
-    if (y > 0 && grid[x][y-1] == boxvalue)
-        return true;
-    if (y < Size-1 && grid[x][y+1] == boxvalue)
-        return true;
-    return false;
-}
-bool allnotempty(const vector<vector<int>>& grid) {
-    for (int i = 0; i < Size; i++){
-       for (int j = 0; j < Size; j++){
-           if (grid[i][j] == 0){
-               return false;
-                   }
-       }
+
+void printBoard() {
+    system("clear");
+    cout << "Score: " << score << "\n\n";
+    
+    // Print top border
+    cout << "  +";
+    for (int j = 0; j < Size; j++) {
+        cout << "-----+";
     }
-    return true;
+    cout << "\n";
+    
+    // Print each row with grid lines
+    for (int i = 0; i < Size; i++) {
+        cout << "  |";
+        for (int j = 0; j < Size; j++) {
+            if (grid[i][j] == 0) {
+                cout << "     |"; // Empty tile
+            } else {
+                cout << setw(5) << grid[i][j] << "|";
+            }
+        }
+        cout << "\n";
+        
+        // Print horizontal line between rows (except after last row)
+        if (i < Size - 1) {
+            cout << "  +";
+            for (int j = 0; j < Size; j++) {
+                cout << "-----+";
+            }
+            cout << "\n";
+        }
+    }
+    
+    // Print bottom border
+    cout << "  +";
+    for (int j = 0; j < Size; j++) {
+        cout << "-----+";
+    }
+    cout << "\n\n";
+    
+    cout << "Use WASD to move, Esc for menu\n";
+}
+
+int main() {
+    setNonBlockingInput();
+    vector<string> mainMenuOptions = {"New Game", "Load", "Quit"}; // Main Menu
+    int mainChoice = showGenericMenu("MAIN MENU", mainMenuOptions, score);
+    if (mainChoice == 0) { // New Game
+        score = 0;
+        gameOver = false;
+        // <- need some code for initialize the grid
+        vector<string> difficultyMenuOptions = {"Normal", "Hard", "Ex Hard"};
+        int difficultyChoice = showGenericMenu("DIFFICULTY", difficultyMenuOptions, score);
+        if (difficultyChoice == 0) { // Normal
+            difficulty = "Normal";
+        } else if (mainChoice == 1) { // Hard
+            difficulty = "Hard";
+        } else if (mainChoice == 2) { // Ex Hard
+            difficulty = "Ex Hard";
+        }    
+    } else if (mainChoice == 1) { // Load
+        loadGame(grid, score);
+    } else if (mainChoice == 2) { // Quit
+        restoreInput();
+        return 0;
+    }
+    printBoard();
+    /*
+
+    
+    Game Logic
+    
+    
+    */
+    vector<string> gameOverOptions = {"Back to Main Menu"}; // Game Over Menu
+    int endChoice = showGenericMenu("Game Over! Final Score: " + to_string(score), gameOverOptions, score);
+    
+    if (endChoice == 0) { // Back to Main Menu
+        gameOver = false;
+        // <- need some code for initialize the grid
+        main();
+    }
+    return 0;
 }
