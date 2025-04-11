@@ -191,4 +191,5 @@ bool allnotempty(const vector<pair<int, int>>& grid) {
                    }
        }
     }
+    return true
 }
