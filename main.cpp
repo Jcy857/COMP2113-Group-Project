@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <unistd.h>
 #include "save_load.h"
 #include "game_menu.h"
 using namespace std;
@@ -8,13 +9,16 @@ using namespace std;
 int score = 0;
 
 // Initialise game over variable
-bool gameOver = false;
+bool game_over = false;
+
+// Initialise quit variable
+bool quit = false;
 
 // Difficulty variable
 string difficulty;
 
 // Variable (N x N) grid
-const int Size = 4;
+int Size = 4;
 vector<vector<int>> grid = vector<vector<int>>(Size, vector<int>(Size, 0));
 
 // Checks if Merge is possible through comparing numbers
@@ -210,93 +214,117 @@ void addrandom() {
         }
         }
         if (!canmove){
-            cout << "No moves, Game Over!!" << endl;
+            game_over = true;
             return;
        }
     }         
 }
 
-void printBoard() {
-    system("clear");
-    cout << "Score: " << score << "\n\n";
-    
-    // Print top border
-    cout << "  +";
-    for (int j = 0; j < Size; j++) {
-        cout << "-----+";
-    }
-    cout << "\n";
-    
-    // Print each row with grid lines
-    for (int i = 0; i < Size; i++) {
-        cout << "  |";
-        for (int j = 0; j < Size; j++) {
-            if (grid[i][j] == 0) {
-                cout << "     |"; // Empty tile
-            } else {
-                cout << setw(5) << grid[i][j] << "|";
-            }
-        }
-        cout << "\n";
-        
-        // Print horizontal line between rows (except after last row)
-        if (i < Size - 1) {
-            cout << "  +";
-            for (int j = 0; j < Size; j++) {
-                cout << "-----+";
-            }
-            cout << "\n";
-        }
-    }
-    
-    // Print bottom border
-    cout << "  +";
-    for (int j = 0; j < Size; j++) {
-        cout << "-----+";
-    }
-    cout << "\n\n";
-    
-    cout << "Use WASD to move, Esc for menu\n";
+void initializeGrid() {
+    grid = vector<vector<int>>(Size, vector<int>(Size, 0));
+    addrandom();
+    addrandom();
 }
 
-int main() {
-    setNonBlockingInput();
+void printBoard() {
+
+}
+
+void difficultyMenu() {
+    vector<string> difficultyMenuOptions = {"Normal", "Hard", "Ex Hard"}; // Difficulty Menu
+    int difficultyChoice = showGenericMenu("DIFFICULTY", difficultyMenuOptions, score);
+    if (difficultyChoice == 0) { // Normal
+        difficulty = "Normal";
+        Size = 4;
+    } else if (difficultyChoice == 1) { // Hard
+        difficulty = "Hard";
+        Size = 8;
+    } else if (difficultyChoice == 2) { // Ex Hard
+        difficulty = "Ex Hard";
+        Size = 12;
+    }
+    initializeGrid();
+    printBoard();
+}
+
+void mainMenu() {
     vector<string> mainMenuOptions = {"New Game", "Load", "Quit"}; // Main Menu
     int mainChoice = showGenericMenu("MAIN MENU", mainMenuOptions, score);
     if (mainChoice == 0) { // New Game
         score = 0;
-        gameOver = false;
-        // <- need some code for initialize the grid
-        vector<string> difficultyMenuOptions = {"Normal", "Hard", "Ex Hard"};
-        int difficultyChoice = showGenericMenu("DIFFICULTY", difficultyMenuOptions, score);
-        if (difficultyChoice == 0) { // Normal
-            difficulty = "Normal";
-        } else if (mainChoice == 1) { // Hard
-            difficulty = "Hard";
-        } else if (mainChoice == 2) { // Ex Hard
-            difficulty = "Ex Hard";
-        }    
+        game_over = false;
+        difficultyMenu();
     } else if (mainChoice == 1) { // Load
-        loadGame(grid, score);
+        loadGame(grid, Size, score);
     } else if (mainChoice == 2) { // Quit
-        restoreInput();
-        return 0;
+        game_over = true;
+        quit = true;
     }
-    printBoard();
-    /*
+}
 
+void escMenu() {
+    vector<string> inGameMenuOptions = {"Continue", "Load", "Save", "Quit"};
+    int choice = showGenericMenu("MENU", inGameMenuOptions, score);
     
-    Game Logic
-    
-    
-    */
+    if (choice == 0) { // Continue
+        printBoard();
+    } else if (choice == 1) { // Load
+        loadGame(grid, Size, score);
+        printBoard();
+    } else if (choice == 2) { // Save
+        saveGame(grid, Size, score);
+        printBoard();
+    } else if (choice == 3) { // Quit
+        game_over = true;
+    }
+
+}
+
+void gameOver() {
     vector<string> gameOverOptions = {"Back to Main Menu"}; // Game Over Menu
     int endChoice = showGenericMenu("Game Over! Final Score: " + to_string(score), gameOverOptions, score);
-    
     if (endChoice == 0) { // Back to Main Menu
-        gameOver = false;
-        // <- need some code for initialize the grid
-        main();
+        game_over = false;
     }
+}
+
+int main() {
+    setNonBlockingInput();
+    mainMenu();
+    
+    while (game_over == false) {
+        if (kbhit()) {
+            char ch;
+            cin >> ch;
+            if (ch == 'w') {
+                MoveUp();
+                addrandom();
+            } else if (ch == 's') {
+                MoveDown();
+                addrandom();
+            } else if (ch == 'a') {
+                MoveLeft();
+                addrandom();
+            } else if (ch == 'd') {
+                MoveRight();
+                addrandom();
+            } else if (ch == 27) { // Escape key
+                escMenu();
+            }
+            if (game_over == true) {
+                break;
+            }
+            printBoard();
+        }
+        usleep(100000);
+    }
+    
+    if (quit == true) {
+        restoreInput();
+        return 0;
+    } else {
+        gameOver();
+        main();
+    };
     return 0;
 }
