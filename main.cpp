@@ -150,17 +150,45 @@ void MoveDown() {
 }
 
 void addrandom() {
-   vector<pair<int, int>> emptyblock;
-   for (int i = 0; i size; i++){
-      for (int j = 0; j size; i++){
-         if (grid[i][j] == 0) {
-            emptyblock.pushback({i,j});
-         }
-      }
-   }
-   srand(time(0));
-   int randomplace = rand() % emptyblock.size();
-   auto [row, col] = emptyblock[randomplace]
-   int randomnum = (rand() % 2 == 0)? 2 : 4;
-   grid[row][col] = randomnum;
+    vector<pair<int, int>> emptyblock;
+    for (int i = 0; i < Size; i++){
+       for (int j = 0; j < Size; j++){
+          if (grid[i][j] == 0) {
+             emptyblock.pushback({i,j});
+          }
+       }
+    }
+    srand(time(0));
+    int randomplace = rand() % emptyblock.size();
+    auto [row, col] = emptyblock[randomplace];
+    int randomnum = (rand() % 2 == 0)? 2 : 4;
+    grid[row][col] = randomnum;
+    for (int i = 0; i < Size; i++){
+       for (int j = 0; j < Size; j++){
+           if (nearbysamevalue(grid, i, j) == 0 && allnotempty(grid) == 1){
+               cout << "No moves, Game Over!!" << endl
+                   }
+       }
+    }         
+}
+bool nearbysamevalue(const vector<pair<int, int>> & grid, int x, int y) {
+    int boxvalue = grid[x][y];
+    if (x > 0 && grid[x-1][y] == boxvalue)
+        return true
+    if (x < Size && grid[x+1][y] == boxvalue)
+        return true
+    if (y > 0 && grid[x][y-1] == boxvalue)
+        return true
+    if (y < Size && grid[x][y+1] == boxvalue)
+        return true
+    return false
+}
+bool allnotempty(const vector<pair<int, int>>& grid) {
+    for (int i = 0; i < Size; i++){
+       for (int j = 0; j < Size; j++){
+           if (grid[i][j] == 0){
+               return false
+                   }
+       }
+    }
 }
