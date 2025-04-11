@@ -149,3 +149,18 @@ void MoveDown() {
     }
 }
 
+void addrandom() {
+   vector<pair<int, int>> emptyblock;
+   for (int i = 0; i size; i++){
+      for (int j = 0; j size; i++){
+         if (grid[i][j] == 0) {
+            emptyblock.pushback({i,j});
+         }
+      }
+   }
+   srand(time(0));
+   int randomplace = rand() % emptyblock.size();
+   auto [row, col] = emptyblock[randomplace]
+   int randomnum = (rand() % 2 == 0)? 2 : 4;
+   grid[row][col] = randomnum;
+}
