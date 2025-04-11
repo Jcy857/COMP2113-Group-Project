@@ -175,6 +175,7 @@ void addrandom() {
         if (canmove){
             break;
         }
+        }
         if (!canmove){
             cout << "No moves, Game Over!!" << endl;
             return;
