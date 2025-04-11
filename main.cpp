@@ -1,11 +1,13 @@
 #include <iostream>
+#include "save_load.h"
+#include "game_menu.h"
 using namespace std;
 
 // Initilise score variable
-int Score = 0;
+int score = 0;
 
 // Variable (N x N) grid
-int Size = 4;
+const int Size = 4;
 int grid[Size][Size] = {0};
 
 // Checks if Merge is possible through comparing numbers
