@@ -154,7 +154,7 @@ void addrandom() {
     for (int i = 0; i < Size; i++){
        for (int j = 0; j < Size; j++){
           if (grid[i][j] == 0) {
-             emptyblock.pushback({i,j});
+             emptyblock.push_back({i,j});
           }
        }
     }
@@ -165,8 +165,9 @@ void addrandom() {
     grid[row][col] = randomnum;
     for (int i = 0; i < Size; i++){
        for (int j = 0; j < Size; j++){
-           if (nearbysamevalue(grid, i, j) == 0 && allnotempty(grid) == 1){
-               cout << "No moves, Game Over!!" << endl
+           if (!nearbysamevalue(grid, i, j) && allnotempty(grid)){
+               cout << "No moves, Game Over!!" << endl;
+               return;
                    }
        }
     }         
@@ -175,11 +176,11 @@ bool nearbysamevalue(const vector<pair<int, int>> & grid, int x, int y) {
     int boxvalue = grid[x][y];
     if (x > 0 && grid[x-1][y] == boxvalue)
         return true
-    if (x < Size && grid[x+1][y] == boxvalue)
+    if (x < Size-1 && grid[x+1][y] == boxvalue)
         return true
     if (y > 0 && grid[x][y-1] == boxvalue)
         return true
-    if (y < Size && grid[x][y+1] == boxvalue)
+    if (y < Size-1 && grid[x][y+1] == boxvalue)
         return true
     return false
 }
