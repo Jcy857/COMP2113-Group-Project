@@ -20,6 +20,8 @@ bool kbhit() {
 
 void restoreInput() {
     tcsetattr(STDIN_FILENO, TCSANOW, &orig_term);
+    int flags = fcntl(STDIN_FILENO, F_GETFL);
+    fcntl(STDIN_FILENO, F_SETFL, flags & ~O_NONBLOCK);
 }
 
 void setNonBlockingInput() {
