@@ -296,17 +296,30 @@ int main() {
         if (kbhit()) {
             char ch;
             cin >> ch;
+            vector<vector<int>>previousgrid = grid
             if (ch == 'w') {
                 MoveUp();
+                if (previousgrid == grid){
+                    continue;
+                }
                 addrandom();
             } else if (ch == 's') {
                 MoveDown();
+                if (previousgrid == grid){
+                    continue;
+                }
                 addrandom();
             } else if (ch == 'a') {
                 MoveLeft();
+                if (previousgrid == grid){
+                    continue;
+                }
                 addrandom();
             } else if (ch == 'd') {
                 MoveRight();
+                if (previousgrid == grid){
+                    continue;
+                }
                 addrandom();
             } else if (ch == 27) { // Escape key
                 escMenu();
