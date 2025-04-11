@@ -163,16 +163,25 @@ void addrandom() {
     auto [row, col] = emptyblock[randomplace];
     int randomnum = (rand() % 2 == 0)? 2 : 4;
     grid[row][col] = randomnum;
-    for (int i = 0; i < Size; i++){
-       for (int j = 0; j < Size; j++){
-           if (!nearbysamevalue(grid, i, j) && allnotempty(grid)){
-               cout << "No moves, Game Over!!" << endl;
-               return;
-                   }
+    if (allnotempty(grid)){
+        bool canmove = false;
+        for (int i = 0; i < Size; i++){
+            for (int j = 0; j < Size; j++){
+               if (nearbysamevalue(grid, i, j)){
+                   canmove = true;
+                   break;
+               }
+            }
+        if (canmove){
+            break;
+        }
+        if (!canmove){
+            cout << "No moves, Game Over!!" << endl;
+            return;
        }
     }         
 }
-bool nearbysamevalue(const vector<pair<int, int>> & grid, int x, int y) {
+bool nearbysamevalue(const vector<vector<int>> & grid, int x, int y) {
     int boxvalue = grid[x][y];
     if (x > 0 && grid[x-1][y] == boxvalue)
         return true
@@ -184,7 +193,7 @@ bool nearbysamevalue(const vector<pair<int, int>> & grid, int x, int y) {
         return true
     return false
 }
-bool allnotempty(const vector<pair<int, int>>& grid) {
+bool allnotempty(const vector<vector<int>>& grid) {
     for (int i = 0; i < Size; i++){
        for (int j = 0; j < Size; j++){
            if (grid[i][j] == 0){
