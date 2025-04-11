@@ -8,8 +8,9 @@ using namespace std;
 // Initialise score variable
 int score = 0;
 
-// Initialise game over variable
+// Initialise game status variable
 bool game_over = false;
+bool game_victory = false;
 
 // Initialise quit variable
 bool quit = false;
@@ -227,6 +228,46 @@ void initializeGrid() {
 }
 
 void printBoard() {
+    system("clear");
+    cout << "Score: " << score << "\n\n";
+    
+    // Print top border
+    cout << "  +";
+    for (int j = 0; j < Size; j++) {
+        cout << "-----+";
+    }
+    cout << "\n";
+    
+    // Print each row with grid lines
+    for (int i = 0; i < Size; i++) {
+        cout << "  |";
+        for (int j = 0; j < Size; j++) {
+            if (grid[i][j] == 0) {
+                cout << "     |"; // Empty tile
+            } else {
+                cout << setw(5) << grid[i][j] << "|";
+            }
+        }
+        cout << "\n";
+        
+        // Print horizontal line between rows (except after last row)
+        if (i < Size - 1) {
+            cout << "  +";
+            for (int j = 0; j < Size; j++) {
+                cout << "-----+";
+            }
+            cout << "\n";
+        }
+    }
+    
+    // Print bottom border
+    cout << "  +";
+    for (int j = 0; j < Size; j++) {
+        cout << "-----+";
+    }
+    cout << "\n\n";
+    
+    cout << "Use WASD to move, Esc for menu\n";
 
 }
 
@@ -253,9 +294,11 @@ void mainMenu() {
     if (mainChoice == 0) { // New Game
         score = 0;
         game_over = false;
+        game_victory = false;
         difficultyMenu();
     } else if (mainChoice == 1) { // Load
         loadGame(grid, Size, score);
+        printBoard();
     } else if (mainChoice == 2) { // Quit
         game_over = true;
         quit = true;
@@ -288,6 +331,17 @@ void gameOver() {
     }
 }
 
+void victory() {
+    std::vector<std::string> victoryOptions = {"Continue", "Back to Main Menu"}; // Victory Menu
+    int victoryChoice = showGenericMenu("Victory! Final Score: " + std::to_string(score), victoryOptions, score);
+    game_victory = true;
+    if (victoryChoice == 0) { // Continue
+        printBoard();
+    } else if (victoryChoice == 1) { // Back to Main Menu
+        game_over = true;
+    }
+}
+
 int main() {
     setNonBlockingInput();
     mainMenu();
@@ -296,29 +350,67 @@ int main() {
         if (kbhit()) {
             char ch;
             cin >> ch;
+
+            // Save the current state of the grid to compare later
+            vector<vector<int>> previous_grid = grid;
+
             if (ch == 'w') {
                 MoveUp();
+                 // Check if the grid has changed; if not, continue
+                if (grid == previous_grid) {
+                    continue;
+                }
                 addrandom();
+                printBoard();
             } else if (ch == 's') {
                 MoveDown();
+                // Check if the grid has changed; if not, continue
+                if (grid == previous_grid) {
+                    continue;
+                }
                 addrandom();
+                printBoard();
             } else if (ch == 'a') {
                 MoveLeft();
+                // Check if the grid has changed; if not, continue
+                if (grid == previous_grid) {
+                    continue;
+                }
                 addrandom();
+                printBoard();
             } else if (ch == 'd') {
                 MoveRight();
+                // Check if the grid has changed; if not, continue
+                if (grid == previous_grid) {
+                    continue;
+                }
                 addrandom();
+                printBoard();
             } else if (ch == 27) { // Escape key
                 escMenu();
             }
+            if (game_victory == false) {
+                for (int i = 0; i < Size; i++){
+                    for (int j = 0; j < Size; j++){
+                       if (grid[i][j] == 2048) {
+                          game_victory = true;
+                          victory();
+                       }
+                    }
+                }
+            }
+
             if (game_over == true) {
                 break;
             }
-            printBoard();
+            
         }
         usleep(100000);
     }
-    
+
+    game_victory = false;
+    game_over = false;
+
     if (quit == true) {
         restoreInput();
         return 0;
