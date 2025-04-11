@@ -184,22 +184,22 @@ void addrandom() {
 bool nearbysamevalue(const vector<vector<int>> & grid, int x, int y) {
     int boxvalue = grid[x][y];
     if (x > 0 && grid[x-1][y] == boxvalue)
-        return true
+        return true;
     if (x < Size-1 && grid[x+1][y] == boxvalue)
-        return true
+        return true;
     if (y > 0 && grid[x][y-1] == boxvalue)
-        return true
+        return true;
     if (y < Size-1 && grid[x][y+1] == boxvalue)
-        return true
-    return false
+        return true;
+    return false;
 }
 bool allnotempty(const vector<vector<int>>& grid) {
     for (int i = 0; i < Size; i++){
        for (int j = 0; j < Size; j++){
            if (grid[i][j] == 0){
-               return false
+               return false;
                    }
        }
     }
-    return true
+    return true;
 }
