@@ -431,20 +431,19 @@ int main() {
             // Save the current state of the grid to compare later
             vector<vector<int>> previous_grid = grid;
 
-            // User input for movement
-            if (ch == 'w') {
+            if (ch == 'w') { // Move up with w
                 MoveUp();
-            } else if (ch == 's') {
+            } else if (ch == 's') { // Move down with s
                 MoveDown();
-            } else if (ch == 'a') {
+            } else if (ch == 'a') { // Move left with a
                 MoveLeft();
-            } else if (ch == 'd') {
+            } else if (ch == 'd') { // Move right with d
                 MoveRight();                
             } else if (ch == 27) { // Escape key = 27
                 EscMenu();
             }
 
-            // Check if the grid has changed
+            // Check if the grid has changed; if not, continue. To prevent continue spawning blocks even if there is no movement
             if (grid == previous_grid) {
                 continue;
             } else {
