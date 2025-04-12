@@ -5,5 +5,6 @@ Group members: Cheng Kan Pang
                Liu Skye
                Wu Yuzhou
 Application description: The 2048 game is a single-player game. It's played on a grid of 4*4 normally, with personalized difficulty of 8*8 and 12*12.The goal is to combine tiles with the same number to create a tile with the value 2048. Player use wasd to move the tiles left, right, up and down to reorder or combine blocks. The player will lose if the grid is full and no other moves are available.
-features: 
-Non-standard libraries:"save_load.h"  ,   "game_menu.h"  ,   unistd.h
+Features: 
+Non-standard libraries:"save_load.h"  ,   "game_menu.h"  ,   <unistd.h>
+Compilation/execution instructions :
