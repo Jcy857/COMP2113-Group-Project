@@ -330,7 +330,7 @@ void DifficultyMenu() {
         Size = 8;
     } else if (difficultyChoice == 1) { // Normal
         difficulty = "Normal";
-        Size = 6;
+        Size = 4;
     } else if (difficultyChoice == 2) { // Hard
         difficulty = "Hard";
         Size = 4;

@@ -35,6 +35,7 @@ bool LoadGame(vector<vector<int>>& board, int& Size, int& score) {
     if (!file.is_open()) return false;
     file >> score;
     file >> Size;
+    board.clear();
     board.resize(Size, vector<int>(Size, 0));
     for (int i = 0; i < Size; i++) {
         for (int j = 0; j < Size; j++) {
