@@ -2,7 +2,7 @@
 #include <string>
 #include "save_load.h"
 
-using std::string, std::vector, std::ofstream, std::ifstream;
+using namespace std;
 
 void saveGame(const vector<vector<int>>& board, int Size, int score) {
     string filename = "save.txt";

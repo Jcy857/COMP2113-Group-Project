@@ -198,7 +198,9 @@ void addrandom() {
     }
     srand(time(0));
     int randomplace = rand() % emptyblock.size();
-    auto [row, col] = emptyblock[randomplace];
+    auto& temp = emptyblock[randomplace];
+    int row = temp.first;
+    int col = temp.second;
     int randomnum = (rand() % 2 == 0)? 2 : 4;
     grid[row][col] = randomnum;
     if (allnotempty(grid)){
@@ -320,10 +322,9 @@ void escMenu() {
     } else if (choice == 3) { // Quit
         game_over = true;
     }
-
 }
 
-void gameOver() {
+void gameOverMenu() {
     vector<string> gameOverOptions = {"Back to Main Menu"}; // Game Over Menu
     int endChoice = showGenericMenu("Game Over! Final Score: " + to_string(score), gameOverOptions, score);
     if (endChoice == 0) { // Back to Main Menu
@@ -341,6 +342,8 @@ void victory() {
         game_over = true;
     }
 }
+
+/*
 bool game_over(const vector<vector<int>> & grid){
     int i, j;
     for(i = 0; i < 4; ++i){
@@ -348,16 +351,18 @@ bool game_over(const vector<vector<int>> & grid){
             if(grid[i][j] == 0){
                 return false;
             }
-            else if(i < 3 && CanMerge(grid[i][j],grid[i+1][j]){
+            else if(i < 3 && CanMerge(grid[i][j],grid[i+1][j])) {
                 return false;
             }
-            else if(j < 3 && CanMerge(grid[i][j],grid[i][j+1]){
+            else if(j < 3 && CanMerge(grid[i][j],grid[i][j+1])) {
                 return false;
             }
         }
     }
     return true;
 }
+*/
+
 int main() {
     setNonBlockingInput();
     mainMenu();
@@ -372,39 +377,24 @@ int main() {
 
             if (ch == 'w') {
                 MoveUp();
-                 // Check if the grid has changed; if not, continue
-                if (grid == previous_grid) {
-                    continue;
-                }
-                addrandom();
-                printBoard();
             } else if (ch == 's') {
                 MoveDown();
-                // Check if the grid has changed; if not, continue
-                if (grid == previous_grid) {
-                    continue;
-                }
-                addrandom();
-                printBoard();
             } else if (ch == 'a') {
                 MoveLeft();
-                // Check if the grid has changed; if not, continue
-                if (grid == previous_grid) {
-                    continue;
-                }
-                addrandom();
-                printBoard();
             } else if (ch == 'd') {
-                MoveRight();
-                // Check if the grid has changed; if not, continue
-                if (grid == previous_grid) {
-                    continue;
-                }
-                addrandom();
-                printBoard();
+                MoveRight();                
             } else if (ch == 27) { // Escape key
                 escMenu();
             }
+
+            // Check if the grid has changed; if not, continue
+            if (grid == previous_grid) {
+                continue;
+            } else {
+                addrandom();
+                printBoard();
+            }
+            
             if (game_victory == false) {
                 for (int i = 0; i < Size; i++){
                     for (int j = 0; j < Size; j++){
@@ -415,7 +405,8 @@ int main() {
                     }
                 }
             }
-            game_over = game_over(grid)
+
+            //game_over = game_over(grid)
             if (game_over == true) {
                 break;
             }
@@ -431,7 +422,7 @@ int main() {
         restoreInput();
         return 0;
     } else {
-        gameOver();
+        gameOverMenu();
         main();
     };
     return 0;

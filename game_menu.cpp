@@ -5,7 +5,7 @@
 #include <fcntl.h>
 #include <termios.h>
 
-using std::string, std::vector, std::cin, std::cout;
+using namespace std;
 struct termios orig_term;
 
 bool kbhit() {

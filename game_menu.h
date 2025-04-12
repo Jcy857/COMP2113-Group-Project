@@ -3,11 +3,10 @@
 
 #include <vector>
 #include <string>
-using std::string, std::vector;
 
 bool kbhit();
 void restoreInput();
 void setNonBlockingInput();
-void printGenericMenu(const string& title, const vector<string>& options, int selected, int score);
-int showGenericMenu(const string& title, const vector<string>& options, int score);
+void printGenericMenu(const std::string& title, const std::vector<std::string>& options, int selected, int score);
+int showGenericMenu(const std::string& title, const std::vector<std::string>& options, int score);
 #endif
