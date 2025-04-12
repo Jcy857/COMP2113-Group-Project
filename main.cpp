@@ -341,7 +341,23 @@ void victory() {
         game_over = true;
     }
 }
-
+bool game_over(const vector<vector<int>> & grid){
+    int i, j;
+    for(i=0;i<4;++i){
+        for(j=0;j<4;++j){
+            if(grid[i][j]==0){
+                return false;
+            }
+            else if(i<3 && CanMerge(grid[i][j],grid[i+1][j]){
+                return false;
+            }
+            else if(j<3 && CanMerge(grid[i][j],grid[i][j+1]){
+                return false;
+            }
+        }
+    }
+    return true;
+}
 int main() {
     setNonBlockingInput();
     mainMenu();
@@ -399,7 +415,7 @@ int main() {
                     }
                 }
             }
-
+            game_over=game_over(grid)
             if (game_over == true) {
                 break;
             }
