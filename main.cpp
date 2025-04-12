@@ -183,12 +183,16 @@ void MoveDown() {
 bool NearBySameValue(const vector<vector<int>> & grid, int x, int y) {
     int boxvalue = grid[x][y];
     if (x > 0 && grid[x-1][y] == boxvalue)
+        // check if left box is same
         return true;
     if (x < Size-1 && grid[x+1][y] == boxvalue)
+        // check if right box is same
         return true;
     if (y > 0 && grid[x][y-1] == boxvalue)
+        // check if upper box is same
         return true;
     if (y < Size-1 && grid[x][y+1] == boxvalue)
+        // check if lower box is same
         return true;
     return false;
 }
@@ -212,26 +216,34 @@ bool AllNotEmpty(const vector<vector<int>>& grid) {
 // This function adds a random number (2 or 4) to an empty cell in the grid
 void AddRandom() {
     vector<pair<int, int>> emptyblock;
+    // make a list of empty block
     for (int i = 0; i < Size; i++){
        for (int j = 0; j < Size; j++){
           if (grid[i][j] == 0) {
              emptyblock.push_back({i,j});
+              // finding empty block and put in list
           }
        }
     }
     srand(time(0));
+    // create different random seed
     int randomplace = rand() % emptyblock.size();
+    // provide a random block in the list of empty block
     auto& temp = emptyblock[randomplace];
     int row = temp.first;
     int col = temp.second;
     int randomnum = (rand() % 2 == 0)? 2 : 4;
+    // create a random number
     grid[row][col] = randomnum;
-    if (AllNotEmpty(grid)){
+    // put the random number in the block
+    if (allnotempty(grid)){
+        // check if gameover when full
         bool canmove = false;
         for (int i = 0; i < Size; i++){
             for (int j = 0; j < Size; j++){
                if (NearBySameValue(grid, i, j)){
                    canmove = true;
+                   // player can still move and merge, the game continue
                    break;
                }
             }
@@ -241,6 +253,7 @@ void AddRandom() {
         }
         if (!canmove){
             game_over = true;
+            // really no move, game over
             return;
        }
     }         
