@@ -22,10 +22,6 @@ string difficulty;
 int Size = 4;
 vector<vector<int>> grid = vector<vector<int>>(Size, vector<int>(Size, 0));
 
-// Checks if Merge is possible through comparing numbers
-bool CanMerge(int a, int b) {
-    return a == b && a != 0;
-}
 
 // In the following, Movement functions: MoveLeft / MoveRight / MoveUp / MoveDown are defined
 // Each function works in a 3 step work flow
@@ -33,6 +29,14 @@ bool CanMerge(int a, int b) {
 // Step 2: adjacent tiles are Merged (e.g. [2 2 4 0] -> [4 0 4 0])
 // Step 3: Using the same code in First Step, the Rows/Columns are compacted again (e.g. [4 0 4 0] -> [4 4 0 0])
 // Further comments are provided for MoveLeft(), the 3 other functions work in the SAME logic
+
+// @param a: The value of the first tile
+// @param b: The value of the second tile
+// @return true if the two tiles can be merged, false otherwise
+// This function checks if two tiles can be merged
+bool CanMerge(int a, int b) {
+    return a == b && a != 0;
+}
 
 // @param None
 // @return None
