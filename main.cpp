@@ -240,7 +240,7 @@ void AddRandom() {
     // create a random number
     grid[row][col] = randomnum;
     // put the random number in the block
-    if (allnotempty(grid)){
+    if (AllNotEmpty(grid)){
         // check if gameover when full
         bool canmove = false;
         for (int i = 0; i < Size; i++){
