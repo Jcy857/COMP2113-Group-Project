@@ -34,6 +34,9 @@ bool CanMerge(int a, int b) {
 // Step 3: Using the same code in First Step, the Rows/Columns are compacted again (e.g. [4 0 4 0] -> [4 4 0 0])
 // Further comments are provided for MoveLeft(), the 3 other functions work in the SAME logic
 
+// @param None
+// @return None
+// This function moves the tiles to the left and merges them if possible
 void MoveLeft() {
   // looping through all rows
     for (int i = 0; i < Size; i++) {
@@ -73,6 +76,9 @@ void MoveLeft() {
     }
 }
 
+// @param None
+// @return None
+// This function moves the tiles to the right and merges them if possible
 void MoveRight() {
     for (int i = 0; i < Size; i++) {
         for (int s = 0; s < Size-1; s++) {
@@ -103,6 +109,9 @@ void MoveRight() {
     }
 }
 
+// @param None
+// @return None
+// This function moves the tiles up and merges them if possible
 void MoveUp() {
     for (int j = 0; j < Size; j++) {
         for (int s = 0; s < Size-1; s++) {
@@ -133,6 +142,9 @@ void MoveUp() {
     }
 }
 
+// @param None
+// @return None
+// This function moves the tiles down and merges them if possible
 void MoveDown() {
     for (int j = 0; j < Size; j++) {
         for (int s = 0; s < Size-1; s++) {
@@ -163,7 +175,12 @@ void MoveDown() {
     }
 }
 
-bool nearbysamevalue(const vector<vector<int>> & grid, int x, int y) {
+// @param grid: The game grid
+// @param x: The row index of the tile
+// @param y: The column index of the tile
+// @return true if there is a tile with the same value in the adjacent cells, false otherwise
+// This function checks if there is a tile with the same value in the adjacent cells
+bool NearBySameValue(const vector<vector<int>> & grid, int x, int y) {
     int boxvalue = grid[x][y];
     if (x > 0 && grid[x-1][y] == boxvalue)
         return true;
@@ -176,7 +193,10 @@ bool nearbysamevalue(const vector<vector<int>> & grid, int x, int y) {
     return false;
 }
 
-bool allnotempty(const vector<vector<int>>& grid) {
+// @param grid: The game grid
+// @return true if all cells in the grid are not empty, false otherwise
+// This function checks if all cells in the grid are not empty
+bool AllNotEmpty(const vector<vector<int>>& grid) {
     for (int i = 0; i < Size; i++){
        for (int j = 0; j < Size; j++){
            if (grid[i][j] == 0){
@@ -187,7 +207,10 @@ bool allnotempty(const vector<vector<int>>& grid) {
     return true;
 }
 
-void addrandom() {
+// @param None
+// @return None
+// This function adds a random number (2 or 4) to an empty cell in the grid
+void AddRandom() {
     vector<pair<int, int>> emptyblock;
     for (int i = 0; i < Size; i++){
        for (int j = 0; j < Size; j++){
@@ -203,11 +226,11 @@ void addrandom() {
     int col = temp.second;
     int randomnum = (rand() % 2 == 0)? 2 : 4;
     grid[row][col] = randomnum;
-    if (allnotempty(grid)){
+    if (AllNotEmpty(grid)){
         bool canmove = false;
         for (int i = 0; i < Size; i++){
             for (int j = 0; j < Size; j++){
-               if (nearbysamevalue(grid, i, j)){
+               if (NearBySameValue(grid, i, j)){
                    canmove = true;
                    break;
                }
@@ -223,13 +246,19 @@ void addrandom() {
     }         
 }
 
-void initializeGrid() {
+// @param None
+// @return None
+// This function initialise the grid with two random numbers and set the score to 0
+void InitializeGrid() {
     grid = vector<vector<int>>(Size, vector<int>(Size, 0));
-    addrandom();
-    addrandom();
+    AddRandom();
+    AddRandom();
 }
 
-void printBoard() {
+// @param None
+// @return None
+// This function prints the current state of the grid and the score
+void PrintBoard() {
     system("clear");
     cout << "Score: " << score << "\n\n";
     
@@ -273,71 +302,86 @@ void printBoard() {
 
 }
 
-void difficultyMenu() {
-    vector<string> difficultyMenuOptions = {"Normal", "Hard", "Ex Hard"}; // Difficulty Menu
-    int difficultyChoice = showGenericMenu("DIFFICULTY", difficultyMenuOptions, score);
-    if (difficultyChoice == 0) { // Normal
-        difficulty = "Normal";
-        Size = 4;
-    } else if (difficultyChoice == 1) { // Hard
-        difficulty = "Hard";
+// @param None
+// @return None
+// This function displays the difficulty menu and sets the game difficulty
+void DifficultyMenu() {
+    vector<string> DifficultyMenuOptions = {"Easy", "Normal", "Hard"}; // Difficulty Menu
+    int difficultyChoice = ShowGenericMenu("DIFFICULTY", DifficultyMenuOptions, score);
+    if (difficultyChoice == 0) { // Easy
+        difficulty = "Easy";
         Size = 8;
-    } else if (difficultyChoice == 2) { // Ex Hard
-        difficulty = "Ex Hard";
-        Size = 12;
+    } else if (difficultyChoice == 1) { // Normal
+        difficulty = "Normal";
+        Size = 6;
+    } else if (difficultyChoice == 2) { // Hard
+        difficulty = "Hard";
+        Size = 4;
     }
-    initializeGrid();
-    printBoard();
+    InitializeGrid();
+    PrintBoard();
 }
 
-void mainMenu() {
-    vector<string> mainMenuOptions = {"New Game", "Load", "Quit"}; // Main Menu
-    int mainChoice = showGenericMenu("MAIN MENU", mainMenuOptions, score);
+// @param None
+// @return None
+// This function displays the main menu and handles user input for starting a new game, loading a game, or quitting
+void MainMenu() {
+    vector<string> MainMenuOptions = {"New Game", "Load", "Quit"}; // Main Menu
+    int mainChoice = ShowGenericMenu("MAIN MENU", MainMenuOptions, score);
     if (mainChoice == 0) { // New Game
         score = 0;
         game_over = false;
         game_victory = false;
-        difficultyMenu();
+        DifficultyMenu();
     } else if (mainChoice == 1) { // Load
-        loadGame(grid, Size, score);
-        printBoard();
+        LoadGame(grid, Size, score);
+        PrintBoard();
     } else if (mainChoice == 2) { // Quit
         game_over = true;
         quit = true;
     }
 }
 
-void escMenu() {
-    vector<string> inGameMenuOptions = {"Continue", "Load", "Save", "Quit"};
-    int choice = showGenericMenu("MENU", inGameMenuOptions, score);
+// @param None
+// @return None
+// This function displays the in-game menu and handles user input for continuing, loading, saving, or quitting
+void EscMenu() {
+    vector<string> inGameMenuOptions = {"Continue", "Load", "Save", "Main Menu"};
+    int choice = ShowGenericMenu("MENU", inGameMenuOptions, score);
     
     if (choice == 0) { // Continue
-        printBoard();
+        PrintBoard();
     } else if (choice == 1) { // Load
-        loadGame(grid, Size, score);
-        printBoard();
+        LoadGame(grid, Size, score);
+        PrintBoard();
     } else if (choice == 2) { // Save
-        saveGame(grid, Size, score);
-        printBoard();
-    } else if (choice == 3) { // Quit
+        SaveGame(grid, Size, score);
+        PrintBoard();
+    } else if (choice == 3) { // Main Menu
         game_over = true;
     }
 }
 
-void gameOverMenu() {
+// @param None
+// @return None
+// This function displays the game over menu and handles user input for continuing or quitting
+void GameOverMenu() {
     vector<string> gameOverOptions = {"Back to Main Menu"}; // Game Over Menu
-    int endChoice = showGenericMenu("Game Over! Final Score: " + to_string(score), gameOverOptions, score);
+    int endChoice = ShowGenericMenu("Game Over! Final Score: " + to_string(score), gameOverOptions, score);
     if (endChoice == 0) { // Back to Main Menu
         game_over = false;
     }
 }
 
-void victory() {
+// @param None
+// @return None
+// This function displays the victory menu and handles user input for continuing or going back to the main menu
+void VictoryMenu() {
     std::vector<std::string> victoryOptions = {"Continue", "Back to Main Menu"}; // Victory Menu
-    int victoryChoice = showGenericMenu("Victory! Final Score: " + std::to_string(score), victoryOptions, score);
+    int victoryChoice = ShowGenericMenu("Victory! Final Score: " + std::to_string(score), victoryOptions, score);
     game_victory = true;
     if (victoryChoice == 0) { // Continue
-        printBoard();
+        PrintBoard();
     } else if (victoryChoice == 1) { // Back to Main Menu
         game_over = true;
     }
@@ -364,17 +408,19 @@ bool game_over(const vector<vector<int>> & grid){
 */
 
 int main() {
-    setNonBlockingInput();
-    mainMenu();
+    SetNonBlockingInput();
+    MainMenu();
     
     while (game_over == false) {
         if (kbhit()) {
+            // Read user input
             char ch;
             cin >> ch;
 
             // Save the current state of the grid to compare later
             vector<vector<int>> previous_grid = grid;
 
+            // User input for movement
             if (ch == 'w') {
                 MoveUp();
             } else if (ch == 's') {
@@ -383,24 +429,25 @@ int main() {
                 MoveLeft();
             } else if (ch == 'd') {
                 MoveRight();                
-            } else if (ch == 27) { // Escape key
-                escMenu();
+            } else if (ch == 27) { // Escape key = 27
+                EscMenu();
             }
 
-            // Check if the grid has changed; if not, continue
+            // Check if the grid has changed
             if (grid == previous_grid) {
                 continue;
             } else {
-                addrandom();
-                printBoard();
+                AddRandom();
+                PrintBoard();
             }
             
+            // Check Victory condition
             if (game_victory == false) {
                 for (int i = 0; i < Size; i++){
                     for (int j = 0; j < Size; j++){
                        if (grid[i][j] == 2048) {
                           game_victory = true;
-                          victory();
+                          VictoryMenu();
                        }
                     }
                 }
@@ -418,12 +465,15 @@ int main() {
     game_victory = false;
     game_over = false;
 
+    // Check if the game is over and display the game over menu
     if (quit == true) {
-        restoreInput();
+        RestoreInput();
         return 0;
     } else {
-        gameOverMenu();
+        GameOverMenu();
+        RestoreInput();
         main();
     };
+    RestoreInput();
     return 0;
 }

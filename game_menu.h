@@ -5,8 +5,8 @@
 #include <string>
 
 bool kbhit();
-void restoreInput();
-void setNonBlockingInput();
-void printGenericMenu(const std::string& title, const std::vector<std::string>& options, int selected, int score);
-int showGenericMenu(const std::string& title, const std::vector<std::string>& options, int score);
+void RestoreInput();
+void SetNonBlockingInput();
+void PrintGenericMenu(const std::string& title, const std::vector<std::string>& options, int selected, int score);
+int ShowGenericMenu(const std::string& title, const std::vector<std::string>& options, int score);
 #endif

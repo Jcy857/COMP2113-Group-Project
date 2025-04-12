@@ -8,6 +8,9 @@
 using namespace std;
 struct termios orig_term;
 
+// @param None
+// @return true if a key has been pressed, false otherwise
+// This function uses non-blocking I/O to check for key presses without waiting for input
 bool kbhit() {
     char ch;
     int n = read(STDIN_FILENO, &ch, 1);
@@ -18,13 +21,19 @@ bool kbhit() {
     return false;
 }
 
-void restoreInput() {
+// @param None
+// @return None
+// This function restores the terminal settings to their original state
+void RestoreInput() {
     tcsetattr(STDIN_FILENO, TCSANOW, &orig_term);
     int flags = fcntl(STDIN_FILENO, F_GETFL);
     fcntl(STDIN_FILENO, F_SETFL, flags & ~O_NONBLOCK);
 }
 
-void setNonBlockingInput() {
+// @param None
+// @return None
+// This function sets the terminal to non-blocking input mode
+void SetNonBlockingInput() {
     struct termios ttystate;
     tcgetattr(STDIN_FILENO, &orig_term);
     tcgetattr(STDIN_FILENO, &ttystate);
@@ -35,8 +44,13 @@ void setNonBlockingInput() {
     fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) | O_NONBLOCK);
 }
 
-
-void printGenericMenu(const string& title, const vector<string>& options, int selected, int score) {
+// @param title: The title of the menu
+// @param options: A vector of strings representing the menu options
+// @param selected: The index of the currently selected option
+// @param score: The current score to display
+// @return None
+// This function prints a generic menu with the title, options, selected option, and score
+void PrintGenericMenu(const string& title, const vector<string>& options, int selected, int score) {
     system("clear");
     cout << "Score: " << score << "\n\n";
     cout << "===== " << title << " =====\n";
@@ -46,9 +60,14 @@ void printGenericMenu(const string& title, const vector<string>& options, int se
     cout << "\nUse W/S to navigate, E to select\n";
 }
 
-int showGenericMenu(const string& title, const vector<string>& options, int score) {
+// @param title: The title of the menu
+// @param options: A vector of strings representing the menu options
+// @param score: The current score to display
+// @return The index of the selected option
+// This function shows a generic menu and returns the index of the selected option
+int ShowGenericMenu(const string& title, const vector<string>& options, int score) {
     int selected = 0;
-    printGenericMenu(title, options, selected, score);
+    PrintGenericMenu(title, options, selected, score);
     
     while (true) {
         if (kbhit()) {
@@ -56,10 +75,10 @@ int showGenericMenu(const string& title, const vector<string>& options, int scor
             cin >> ch;
             if (ch == 'w') {
                 selected = (selected - 1 + options.size()) % options.size();
-                printGenericMenu(title, options, selected, score);
+                PrintGenericMenu(title, options, selected, score);
             } else if (ch == 's') {
                 selected = (selected + 1) % options.size();
-                printGenericMenu(title, options, selected, score);
+                PrintGenericMenu(title, options, selected, score);
             } else if (ch == 'e') {
                 return selected;
             }
