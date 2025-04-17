@@ -22,14 +22,6 @@ string difficulty;
 int Size = 4;
 vector<vector<int>> grid = vector<vector<int>>(Size, vector<int>(Size, 0));
 
-
-// In the following, Movement functions: MoveLeft / MoveRight / MoveUp / MoveDown are defined
-// Each function works in a 3 step work flow
-// Step 1: the 4 Rows(Left/Right) or 4 Columns(Up/Down) are compacted with no Merge (e.g. [0 2 2 4] -> [2 2 4 0])
-// Step 2: adjacent tiles are Merged (e.g. [2 2 4 0] -> [4 0 4 0])
-// Step 3: Using the same code in First Step, the Rows/Columns are compacted again (e.g. [4 0 4 0] -> [4 4 0 0])
-// Further comments are provided for MoveLeft(), the 3 other functions work in the SAME logic
-
 // @param a: The value of the first tile
 // @param b: The value of the second tile
 // @return true if the two tiles can be merged, false otherwise
@@ -37,6 +29,13 @@ vector<vector<int>> grid = vector<vector<int>>(Size, vector<int>(Size, 0));
 bool CanMerge(int a, int b) {
     return a == b && a != 0;
 }
+
+// In the following, Movement functions: MoveLeft / MoveRight / MoveUp / MoveDown are defined
+// Each function works in a 3-step workflow
+// Step 1: the 4 Rows(Left/Right) or 4 Columns(Up/Down) are compacted with no Merge (e.g. [0 2 2 4] -> [2 2 4 0])
+// Step 2: adjacent tiles are Merged (e.g. [2 2 4 0] -> [4 0 4 0])
+// Step 3: Using the same code in the First Step, the Rows/Columns are compacted again (e.g. [4 0 4 0] -> [4 4 0 0])
+// Further comments are provided for MoveLeft(), the 3 other functions work in the SAME logic
 
 // @param None
 // @return None
@@ -50,7 +49,7 @@ void MoveLeft() {
           // Slide tiles left by one grid
             for (int j = 0; j < Size-1; j++) {
                 if (grid[i][j] == 0) {
-                  // if tile on left is 0, replace tile on left by the number of current tile
+                  // if the tile on the left is 0, replace the tile on the left with the number of the current tile
                     grid[i][j] = grid[i][j+1];
                   // current tile is set to 0
                     grid[i][j+1] = 0;
@@ -61,7 +60,7 @@ void MoveLeft() {
         // Step 2 for Row i: Merge adjacent tiles
         for (int j = 0; j < Size-1; j++) {
             if (CanMerge(grid[i][j], grid[i][j+1])) {
-              // Mutiply Merge tile value by 2 and set the tile value on the right to 0
+              //Multiply the Merge tile value by 2 and set the tile value on the right to 0
                 grid[i][j] *= 2;
                 score += grid[i][j];
                 grid[i][j+1] = 0;
