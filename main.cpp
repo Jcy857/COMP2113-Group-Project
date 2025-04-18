@@ -49,6 +49,7 @@ bool CanMerge(int a, int b) {
     }
 }
 
+//
 // In the following, Movement functions: MoveLeft / MoveRight / MoveUp / MoveDown are defined
 // Each function works in a 3-step workflow
 // Step 1: the 4 Rows(Left/Right) or 4 Columns(Up/Down) are compacted with no Merge (e.g. [0 2 2 4] -> [2 2 4 0])
@@ -117,6 +118,7 @@ void MoveLeft() {
     }
 }
 
+//
 // @param None
 // @return None
 // This function moves the tiles to the right and merges them if possible
@@ -261,6 +263,7 @@ void MoveDown() {
     }
 }
 
+//
 // @param grid: The game grid
 // @param x: The row index of the tile
 // @param y: The column index of the tile
@@ -284,6 +287,7 @@ bool NearBySameValue(int ** & grid, int x, int y) {
     // there is no same blocks around the cell
 }
 
+//
 // @param grid: The game grid
 // @return true if all cells in the grid are not empty, false otherwise
 // This function checks if all cells in the grid are not empty
@@ -300,6 +304,7 @@ bool AllNotEmpty(int ** & grid) {
     // there is no 0 cell in grid, it is filled
 }
 
+//
 // @param None
 // @return None
 // This function adds a random number (2 or 4) to an empty cell in the grid
@@ -369,6 +374,7 @@ void AddRandom() {
     delete[] emptyblock; // free the allocated memory
 }
 
+//
 // @param None
 // @return None
 // This function initialise the grid with two random numbers and set the score to 0, the grid is a dynamic array of dynamic arraise.
@@ -389,6 +395,7 @@ void InitializeGrid() {
     // add two random numbers in random blocks
 }
 
+//
 // @param None
 // @return None
 // This function prints the current state of the grid and the score
@@ -438,6 +445,7 @@ void PrintBoard() {
 
 }
 
+//
 // @param None
 // @return None
 // This function displays the difficulty menu and sets the game difficulty
@@ -461,6 +469,7 @@ void DifficultyMenu() {
     PrintBoard();
 }
 
+//
 // @param None
 // @return None
 // This function displays the main menu and handles user input for starting a new game, loading a game, or quitting
@@ -485,6 +494,7 @@ void MainMenu(string error_msg = "") {
     }
 }
 
+//
 // @param None
 // @return None
 // This function displays the in-game menu and handles user input for continuing, loading, saving, or quitting
@@ -508,6 +518,7 @@ void EscMenu(string error_msg = "") {
     }
 }
 
+//
 // @param None
 // @return None
 // This function displays the game over menu and handles user input for continuing or quitting
@@ -526,6 +537,7 @@ void GameOverMenu() {
     }
 }
 
+//
 // @param None
 // @return None
 // This function displays the victory menu and handles user input for continuing or going back to the main menu
@@ -550,6 +562,7 @@ void VictoryMenu() {
     }
 }
 
+//
 // @param grid: The game grid
 // @param previous_grid: The saved game grid
 // @param Size: The common size of the two game grids
@@ -568,6 +581,8 @@ bool compare_grid(int** grid, int** previous_grid, int Size) {
     // all cell are same, the grid is same
 }
 
+
+//
 // main function
 int main() {
     SetNonBlockingInput();
