@@ -327,7 +327,7 @@ void AddRandom() {
     // int* temp = emptyblock[randomplace];
     int row = emptyblock[randomplace].row;
     int col = emptyblock[randomplace].col;
-    if (consecutive_merge % wildblock_requirement == 0) {
+    if (consecutive_merge % wildblock_requirement == 0 && consecutive_merge > 0) {
         grid[row][col] = -1;
     }
     // add a wildblcok in to a random block if the player has consecutively merged for the required times
