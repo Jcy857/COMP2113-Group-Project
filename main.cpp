@@ -559,7 +559,7 @@ int main() {
             }
 
             // Check if the grid has changed; if not, continue. To prevent continue spawning blocks even if there is no movement
-            if (compare_grid(grid, previous_grid, Size) {
+            if (compare_grid(grid, previous_grid, Size)) {
                 continue;
             } else {
                 AddRandom();
