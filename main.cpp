@@ -35,7 +35,7 @@ int wildblock_requirement = 8;
 // @return true if the two tiles can be merged, false otherwise
 // This function checks if two tiles can be merged
 bool CanMerge(int a, int b) {
-    if (int a == -1 or int b == -1){
+    if ( a == -1 or b == -1){
         return true;
     // The wildblock we give it the value of -1, and it can merge with any other blocks'
     }
