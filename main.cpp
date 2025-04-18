@@ -278,7 +278,7 @@ void AddRandom() {
     // create different random seed
     int randomplace = rand() % numberofemptyblocks;
     // provide a random block in the list of empty block
-    int* temp = emptyblock[randomplace];
+    // int* temp = emptyblock[randomplace];
     int row = emptyblock[randomplace].row;
     int col = emptyblock[randomplace].col;
     if (consequent_merge == wildblock_requirement) {
@@ -312,6 +312,7 @@ void AddRandom() {
             return;
        }
     }         
+    delete[] emptyblock; // free the allocated memory
 }
 
 // @param None
