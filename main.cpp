@@ -30,7 +30,7 @@ int** grid = nullptr;
 int consecutive_merge = 0;
 
 // Declare the conditions of getting wildblock 
-int wildblock_requirement = 3;
+int wildblock_requirement = 4;
 
 // @param a: The value of the first tile
 // @param b: The value of the second tile
@@ -79,8 +79,18 @@ void MoveLeft() {
         for (int j = 0; j < Size-1; j++) {
             if (CanMerge(grid[i][j], grid[i][j+1])) {
               //Multiply the Merge tile value by 2 and set the tile value on the right to 0
-                grid[i][j] *= 2;
-                score += grid[i][j];
+                int a = grid[i][j];
+                int b = grid[i][j+1];
+                int mergedValue;
+                if (a == -1) {
+                    mergedValue = b * 2;  // Wildblock + Number
+                } else if (b == -1) {
+                    mergedValue = a * 2;  // Number + Wildblock
+                } else {
+                    mergedValue = a * 2;
+                }
+                grid[i][j] = mergedValue;
+                score += mergedValue;
                 grid[i][j+1] = 0;
                 if (Merge_this_step == 0) {
                     consecutive_merge = consecutive_merge + 1; // The merge time only count once for each steps
@@ -118,8 +128,18 @@ void MoveRight() {
 
         for (int j = Size-1; j > 0; j--) {
             if (CanMerge(grid[i][j], grid[i][j-1])) {
-                grid[i][j] *= 2;
-                score += grid[i][j];
+                int a = grid[i][j];
+                int b = grid[i][j-1];
+                int mergedValue;
+                if (a == -1) {
+                    mergedValue = b * 2;
+                } else if (b == -1) {
+                    mergedValue = a * 2;
+                } else {
+                    mergedValue = a * 2;
+                }
+                grid[i][j] = mergedValue;
+                score += mergedValue;
                 grid[i][j-1] = 0;
                 if (Merge_this_step == 0) {
                     consecutive_merge = consecutive_merge + 1; // The merge time only count once for each steps
@@ -156,8 +176,18 @@ void MoveUp() {
 
         for (int i = 0; i < Size-1; i++) {
             if (CanMerge(grid[i][j], grid[i+1][j])) {
-                grid[i][j] *= 2;
-                score += grid[i][j];
+                int a = grid[i][j];
+                int b = grid[i+1][j];
+                int mergedValue;
+                if (a == -1) {
+                    mergedValue = b * 2;
+                } else if (b == -1) {
+                    mergedValue = a * 2;
+                } else {
+                    mergedValue = a * 2;
+                }
+                grid[i][j] = mergedValue;
+                score += mergedValue;
                 grid[i+1][j] = 0;
                 if (Merge_this_step == 0) {
                     consecutive_merge = consecutive_merge + 1; // The merge time only count once for each steps
@@ -194,8 +224,18 @@ void MoveDown() {
 
         for (int i = Size-1; i > 0; i--) {
             if (CanMerge(grid[i][j], grid[i-1][j])) {
-                grid[i][j] *= 2;
-                score += grid[i][j];
+                int a = grid[i][j];
+                int b = grid[i-1][j];
+                int mergedValue;
+                if (a == -1) {
+                    mergedValue = b * 2;
+                } else if (b == -1) {
+                    mergedValue = a * 2;
+                } else {
+                    mergedValue = a * 2;
+                }
+                grid[i][j] = mergedValue;
+                score += mergedValue;
                 grid[i-1][j] = 0;
                 if (Merge_this_step == 0) {
                     consecutive_merge = consecutive_merge + 1; // The merge time only count once for each steps
@@ -394,16 +434,16 @@ void DifficultyMenu() {
     if (difficultyChoice == 0) { // Easy
         difficulty = "Easy";
         Size = 4;
-        wildblock_requirement = 3;
+        wildblock_requirement = 4;
         
     } else if (difficultyChoice == 1) { // Normal
         difficulty = "Normal";
         Size = 8;
-        wildblock_requirement = 3;
+        wildblock_requirement = 4;
     } else if (difficultyChoice == 2) { // Hard
         difficulty = "Hard";
         Size = 12;
-        wildblock_requirement = -1; // The player never can get the wildblock
+        wildblock_requirement = 4;
     }
     InitializeGrid();
     PrintBoard();
