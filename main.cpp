@@ -26,6 +26,9 @@ int Size = 4;
 // Declare the grid variable globally, the grid variable is a pointer to a dynamic array of pointers.
 int** grid = nullptr;
 
+// Global Merge_this_step variable 
+int Merge_this_step = 0;
+
 // Declare the consecutive merge times variable
 int consecutive_merge = 0;
 
@@ -57,8 +60,9 @@ bool CanMerge(int a, int b) {
 // @return None
 // This function moves the tiles to the left and merges them if possible
 void MoveLeft() {
+    //
     // record the merge times in this step
-    int Merge_this_step = 0;
+    Merge_this_step = 0;
   // looping through all rows
     for (int i = 0; i < Size; i++) {
       // Step 1 for row i: Compact tiles
@@ -117,7 +121,7 @@ void MoveLeft() {
 // @return None
 // This function moves the tiles to the right and merges them if possible
 void MoveRight() {
-    int Merge_this_step = 0;
+    Merge_this_step = 0;
     for (int i = 0; i < Size; i++) {
         for (int s = 0; s < Size-1; s++) {
             for (int j = Size-1; j > 0; j--) {
@@ -165,7 +169,7 @@ void MoveRight() {
 // @return None
 // This function moves the tiles up and merges them if possible
 void MoveUp() {
-    int Merge_this_step = 0;
+    Merge_this_step = 0;
     for (int j = 0; j < Size; j++) {
         for (int s = 0; s < Size-1; s++) {
             for (int i = 0; i < Size-1; i++) {
@@ -213,7 +217,7 @@ void MoveUp() {
 // @return None
 // This function moves the tiles down and merges them if possible
 void MoveDown() {
-    int Merge_this_step = 0;
+    Merge_this_step = 0;
     for (int j = 0; j < Size; j++) {
         for (int s = 0; s < Size-1; s++) {
             for (int i = Size-1; i > 0; i--) {
@@ -323,9 +327,8 @@ void AddRandom() {
     // int* temp = emptyblock[randomplace];
     int row = emptyblock[randomplace].row;
     int col = emptyblock[randomplace].col;
-    if (consecutive_merge == wildblock_requirement) {
+    if (consecutive_merge % wildblock_requirement == 0 && consecutive_merge > 0) {
         grid[row][col] = -1;
-        consecutive_merge = 0;
     }
     // add a wildblcok in to a random block if the player has consecutively merged for the required times
     else{
@@ -592,6 +595,10 @@ int main() {
             if (compare_grid(grid, previous_grid, Size)) {
                 continue;
             } else {
+                // reset streak if no merge occurs
+                if (Merge_this_step == 0) {
+                    consecutive_merge = 0;
+                }
                 AddRandom();
                 PrintBoard();
             }
