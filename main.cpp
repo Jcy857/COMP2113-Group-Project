@@ -39,7 +39,7 @@ int wildblock_requirement = 4;
 bool CanMerge(int a, int b) {
     if ((a == -1 && b != 0) || (b == -1 && a != 0)) {
         return true;
-    // The wildblock we give it the value of -1, and it can merge with any other blocks'
+    // The wildblock is assigned value -1 (but displayed as w), and it can merge with any blocks
     }
     else{
         return (a == b && a != 0);
@@ -78,19 +78,21 @@ void MoveLeft() {
         // Step 2 for Row i: Merge adjacent tiles
         for (int j = 0; j < Size-1; j++) {
             if (CanMerge(grid[i][j], grid[i][j+1])) {
-              //Multiply the Merge tile value by 2 and set the tile value on the right to 0
+                // finds out which block is going to merge, considering possible cases of wildblock
                 int a = grid[i][j];
                 int b = grid[i][j+1];
                 int mergedValue;
+                // multiply the Merge tile value by 2 
                 if (a == -1) {
-                    mergedValue = b * 2;  // Wildblock + Number
+                    mergedValue = b * 2; 
                 } else if (b == -1) {
-                    mergedValue = a * 2;  // Number + Wildblock
+                    mergedValue = a * 2; 
                 } else {
                     mergedValue = a * 2;
                 }
                 grid[i][j] = mergedValue;
                 score += mergedValue;
+                // the other tile is set to 0
                 grid[i][j+1] = 0;
                 if (Merge_this_step == 0) {
                     consecutive_merge = consecutive_merge + 1; // The merge time only count once for each steps
@@ -142,7 +144,7 @@ void MoveRight() {
                 score += mergedValue;
                 grid[i][j-1] = 0;
                 if (Merge_this_step == 0) {
-                    consecutive_merge = consecutive_merge + 1; // The merge time only count once for each steps
+                    consecutive_merge = consecutive_merge + 1;
                     Merge_this_step = 1;
                 }
             }
@@ -190,7 +192,7 @@ void MoveUp() {
                 score += mergedValue;
                 grid[i+1][j] = 0;
                 if (Merge_this_step == 0) {
-                    consecutive_merge = consecutive_merge + 1; // The merge time only count once for each steps
+                    consecutive_merge = consecutive_merge + 1;
                     Merge_this_step = 1;
                 }
             }
@@ -238,7 +240,7 @@ void MoveDown() {
                 score += mergedValue;
                 grid[i-1][j] = 0;
                 if (Merge_this_step == 0) {
-                    consecutive_merge = consecutive_merge + 1; // The merge time only count once for each steps
+                    consecutive_merge = consecutive_merge + 1;
                     Merge_this_step = 1;
                 }
             }
