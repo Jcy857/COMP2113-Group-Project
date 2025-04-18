@@ -28,6 +28,7 @@ int** grid = nullptr;
 
 // Global Merge_this_step variable 
 int Merge_this_step = 0;
+
 // Declare the consecutive merge times variable
 int consecutive_merge = 0;
 
@@ -439,7 +440,6 @@ void DifficultyMenu() {
         difficulty = "Easy";
         Size = 4;
         wildblock_requirement = 4;
-        
     } else if (difficultyChoice == 1) { // Normal
         difficulty = "Normal";
         Size = 8;
