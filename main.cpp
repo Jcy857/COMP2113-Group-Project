@@ -26,11 +26,11 @@ int Size = 4;
 // Declare the grid variable globally, the grid variable is a pointer to a dynamic array of pointers.
 int** grid = nullptr;
 
-// Declare the consequent merge times, which will related to the wild blocks.
+// Declare the consequent merge times variable
 int consequent_merge = 0;
 
 // Declare the conditions of getting wildblock 
-int wildblock_requirement = 8;
+int wildblock_requirement = 3;
 
 // @param a: The value of the first tile
 // @param b: The value of the second tile
@@ -340,7 +340,7 @@ void InitializeGrid() {
 // This function prints the current state of the grid and the score
 void PrintBoard() {
     system("clear");
-    cout << "Score: " << score << "\n\n";
+    cout << "Score: " << score << "    Streak: " << consequent_merge << "\n\n";
     
     // Print top border
     cout << "  +";
@@ -392,16 +392,16 @@ void DifficultyMenu() {
     int difficultyChoice = ShowGenericMenu("DIFFICULTY", DifficultyMenuOptions, score);
     if (difficultyChoice == 0) { // Easy
         difficulty = "Easy";
-        Size = 8;
-        wildblock_requirement = 4;
+        Size = 4;
+        wildblock_requirement = 3;
         
     } else if (difficultyChoice == 1) { // Normal
         difficulty = "Normal";
-        Size = 4;
-        wildblock_requirement = 8;
+        Size = 8;
+        wildblock_requirement = 3;
     } else if (difficultyChoice == 2) { // Hard
         difficulty = "Hard";
-        Size = 4;
+        Size = 12;
         wildblock_requirement = -1; // The player never can get the wildblock
     }
     InitializeGrid();
