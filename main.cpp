@@ -76,6 +76,7 @@ void MoveLeft() {
                     grid[i][j] = grid[i][j+1];
                   // current tile is set to 0
                     grid[i][j+1] = 0;
+                    // move left for the whole board
                 }
             }
         }
@@ -95,8 +96,11 @@ void MoveLeft() {
                 } else {
                     mergedValue = a * 2;
                 }
+                // return the merged value
                 grid[i][j] = mergedValue;
+                // return the merged block to the grid
                 score += mergedValue;
+                // the user get the score of the merged value
                 // the other tile is set to 0
                 grid[i][j+1] = 0;
                 if (Merge_this_step == 0) {
@@ -112,6 +116,7 @@ void MoveLeft() {
                 if (grid[i][j] == 0) {
                     grid[i][j] = grid[i][j+1];
                     grid[i][j+1] = 0;
+                    // exchange the value of two cells
                 }
             }
         }
@@ -130,6 +135,7 @@ void MoveRight() {
                 if (grid[i][j] == 0) {
                     grid[i][j] = grid[i][j-1];
                     grid[i][j-1] = 0;
+                    // move right for the whole board
                 }
             }
         }
@@ -178,6 +184,7 @@ void MoveUp() {
                 if (grid[i][j] == 0) {
                     grid[i][j] = grid[i+1][j];
                     grid[i+1][j] = 0;
+                    // move up for the whole board
                 }
             }
         }
@@ -226,6 +233,7 @@ void MoveDown() {
                 if (grid[i][j] == 0) {
                     grid[i][j] = grid[i-1][j];
                     grid[i-1][j] = 0;
+                    // move down for the whole board
                 }
             }
         }
