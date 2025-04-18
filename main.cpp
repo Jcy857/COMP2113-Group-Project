@@ -218,7 +218,7 @@ void MoveDown() {
 // @param y: The column index of the tile
 // @return true if there is a tile with the same value in the adjacent cells, false otherwise
 // This function checks if there is a tile with the same value in the adjacent cells
-bool NearBySameValue(int ** & grid,, int x, int y) {
+bool NearBySameValue(int ** & grid, int x, int y) {
     int boxvalue = grid[x][y];
     if (x > 0 && grid[x-1][y] == boxvalue)
         // check if left box is same
@@ -238,7 +238,7 @@ bool NearBySameValue(int ** & grid,, int x, int y) {
 // @param grid: The game grid
 // @return true if all cells in the grid are not empty, false otherwise
 // This function checks if all cells in the grid are not empty
-bool AllNotEmpty(int ** & grid,) {
+bool AllNotEmpty(int ** & grid) {
     for (int i = 0; i < Size; i++){
        for (int j = 0; j < Size; j++){
            if (grid[i][j] == 0){
@@ -275,7 +275,7 @@ void AddRandom() {
     int row = temp[0];
     int col = temp[1];
     if (consequent_merge == wildblock_requirement) {
-        grid[row][col] = -1
+        grid[row][col] = -1；
     }
     // add a wildblcok in to a random block if the player has consecutively merged for the required times
     else{
@@ -432,7 +432,7 @@ void EscMenu() {
     } else if (choice == 1) { // Load
         for (int i = 0; i < Size; ++i){
             delete[] grid[i];
-            board[i] = nullptr;
+            grid[i] = nullptr;
         }
         delete[] grid;
         grid = nullptr;
@@ -456,7 +456,7 @@ void GameOverMenu() {
     if (endChoice == 0) { // Back to Main Menu
         for (int i = 0; i < Size; ++i){
             delete[] grid[i];
-            board[i] = nullptr;
+            grid[i] = nullptr;
         }
         delete[] grid;
         grid = nullptr;
@@ -476,13 +476,13 @@ void VictoryMenu() {
         PrintBoard();
     } else if (victoryChoice == 1) { // Back to Main Menu
             
-        if (borad != nullptr) {
+        if (grid != nullptr) {
             for (int i = 0; i < Size; ++i) {
                 delete[] borad[i];
-                board[i] = nullptr;
+                grid[i] = nullptr;
             }
             delete[] borad;
-            borad = nullptr;
+            grid = nullptr;
         }
         // release the dynamic memory after the victor achieved and player deceide to leave
         game_over = true;
@@ -537,7 +537,7 @@ int main() {
             // Save the current state of the grid to compare later
             int** previous_grid = new int* [Size];
             for (int i = 0; i < Size; ++i) {
-                board[i] = new int[Size];
+                previous_grid[i] = new int[Size];
             }
             for(int i = 0; i < Size; ++i) {
                 for(int j = 0; j < Size; ++J) {
