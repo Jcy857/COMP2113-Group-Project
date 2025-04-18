@@ -24,12 +24,24 @@ int Size = 4;
 // Declare the grid variable globally, the grid variable is a pointer to a dynamic array of pointers.
 int** grid = nullptr;
 
+// Declare the consequent merge times, which will related to the wild blocks.
+int consequent_merge = 0;
+
+// Declare the conditions of getting wildblock 
+int wildblock_requirement = 8;
+
 // @param a: The value of the first tile
 // @param b: The value of the second tile
 // @return true if the two tiles can be merged, false otherwise
 // This function checks if two tiles can be merged
 bool CanMerge(int a, int b) {
-    return a == b && a != 0;
+    if (int a == -1 or int b == -1){
+        return true;
+    // The wildblock we give it the value of -1, and it can merge with any other blocks'
+    }
+    else{
+        return a == b && a != 0;
+    }
 }
 
 // In the following, Movement functions: MoveLeft / MoveRight / MoveUp / MoveDown are defined
