@@ -380,6 +380,7 @@ void AddRandom() {
             // game over
     }         
     delete[] emptyblock; // free the allocated memory
+    }
 }
 
 //
@@ -548,7 +549,7 @@ void EscMenu(string error_msg = "") {
 // This function displays the game over menu and handles user input for continuing or quitting
 void GameOverMenu() {
     vector<string> gameOverOptions = {"Back to Main Menu"}; // Game Over Menu
-    int endChoice = ShowGenericMenu("Game Over! Final Score: " + to_string(score), gameOverOptions, score);
+    int endChoice = ShowGenericMenu("Game Over! Final Score: " + to_string(score), gameOverOptions, score, "");
     if (endChoice == 0) { // Back to Main Menu
         for (int i = 0; i < Size; ++i){
             delete[] grid[i];
@@ -567,7 +568,7 @@ void GameOverMenu() {
 // This function displays the victory menu and handles user input for continuing or going back to the main menu
 void VictoryMenu() {
     std::vector<std::string> victoryOptions = {"Continue", "Back to Main Menu"}; // Victory Menu
-    int victoryChoice = ShowGenericMenu("Victory! Final Score: " + std::to_string(score), victoryOptions, score);
+    int victoryChoice = ShowGenericMenu("Victory! Final Score: " + std::to_string(score), victoryOptions, score, "");
     game_victory = true;
     if (victoryChoice == 0) { // Continue
         PrintBoard();
