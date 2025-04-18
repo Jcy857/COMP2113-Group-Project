@@ -473,6 +473,15 @@ void VictoryMenu() {
     if (victoryChoice == 0) { // Continue
         PrintBoard();
     } else if (victoryChoice == 1) { // Back to Main Menu
+            
+        if (borad != nullptr) {
+            for (int i = 0; i < Size; ++i) {
+                 delete[] borad[i];
+            }
+            delete[] borad;
+            borad = nullptr;
+        }
+        // release the dynamic memory after the victor achieved and player deceide to leave
         game_over = true;
     }
 }
