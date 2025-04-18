@@ -60,6 +60,7 @@ void SetNonBlockingInput() {
 // @param options: A vector of strings representing the menu options
 // @param selected: The index of the currently selected option
 // @param score: The current score to display
+// @param error_msg: An optional error message to display
 // @return None
 // This function prints a generic menu with the title, options, selected option, and score
 void PrintGenericMenu(const string& title, const vector<string>& options, int selected, int score, string error_msg) {
@@ -79,6 +80,7 @@ void PrintGenericMenu(const string& title, const vector<string>& options, int se
 // @param title: The title of the menu
 // @param options: A vector of strings representing the menu options
 // @param score: The current score to display
+// @param error_msg: An optional error message to display
 // @return The index of the selected option
 // This function shows a generic menu and returns the index of the selected option
 int ShowGenericMenu(const string& title, const vector<string>& options, int score, string error_msg) {

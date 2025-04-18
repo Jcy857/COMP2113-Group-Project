@@ -483,7 +483,7 @@ void DifficultyMenu() {
 }
 
 //
-// @param None
+// @param error_msg: The error message to display (default is an empty string)
 // @return None
 // This function displays the main menu and handles user input for starting a new game, loading a game, or quitting
 void MainMenu(string error_msg = "") {
@@ -516,7 +516,7 @@ void MainMenu(string error_msg = "") {
 }
 
 //
-// @param None
+// @param error_msg: The error message to display (default is an empty string)
 // @return None
 // This function displays the in-game menu and handles user input for continuing, loading, saving, or quitting
 void EscMenu(string error_msg = "") {
@@ -576,7 +576,6 @@ void VictoryMenu() {
     if (victoryChoice == 0) { // Continue
         PrintBoard();
     } else if (victoryChoice == 1) { // Back to Main Menu
-            
         if (grid != nullptr) {
             for (int i = 0; i < Size; ++i) {
                 delete[] grid[i];
