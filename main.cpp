@@ -411,7 +411,7 @@ void DifficultyMenu() {
 // @return None
 // This function displays the main menu and handles user input for starting a new game, loading a game, or quitting
 void MainMenu() {
-    vector<string> MainMenuOptionsm = {"New Game", "Load", "Quit"}; // Main Menu
+    vector<string> MainMenuOptions = {"New Game", "Load", "Quit"}; // Main Menu
     int mainChoice = ShowGenericMenu("MAIN MENU", MainMenuOptions, score);
     if (mainChoice == 0) { // New Game
         score = 0;
@@ -512,25 +512,7 @@ bool compare_grid(int** grid, int** previous_grid, int Size) {
     return true;
 }
 
-
-/*
-bool game_over(){
-    int i, j;
-    for(i = 0; i < 4; ++i){
-        for(j = 0; j < 4; ++j){
-            if(grid[i][j] == 0){
-                return false;
-            } else if(i < 3 && CanMerge(grid[i][j],grid[i+1][j])) {
-                return false;
-            } else if(j < 3 && CanMerge(grid[i][j],grid[i][j+1])) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-*/
-
+// main function
 int main() {
     SetNonBlockingInput();
     MainMenu();
@@ -547,7 +529,7 @@ int main() {
                 previous_grid[i] = new int[Size];
             }
             for(int i = 0; i < Size; ++i) {
-                for(int j = 0; j < Size; ++J) {
+                for(int j = 0; j < Size; ++j) {
                      previous_grid[i][j] = grid[i][j];
                 }
             }
