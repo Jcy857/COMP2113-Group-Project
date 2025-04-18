@@ -435,18 +435,19 @@ void PrintBoard() {
 // This function displays the difficulty menu and sets the game difficulty
 void DifficultyMenu() {
     vector<string> DifficultyMenuOptions = {"Easy", "Normal", "Hard"}; // Difficulty Menu
-    int difficultyChoice = ShowGenericMenu("DIFFICULTY", DifficultyMenuOptions, score);
+    int difficultyChoice = ShowGenericMenu("DIFFICULTY", DifficultyMenuOptions, score, "");
     if (difficultyChoice == 0) { // Easy
         difficulty = "Easy";
-        Size = 4;
+        Size = 8;
         wildblock_requirement = 4;
     } else if (difficultyChoice == 1) { // Normal
         difficulty = "Normal";
         Size = 4;
+        wildblock_requirement = 4;
     } else if (difficultyChoice == 2) { // Hard
         difficulty = "Hard";
         Size = 4;
-        wildblock_requirement = 2;
+        wildblock_requirement = -1;
     }
     InitializeGrid();
     PrintBoard();
@@ -615,7 +616,6 @@ int main() {
                 }
             }
 
-            //game_over = game_over(grid)
             if (game_over == true) {
                 break;
             }
