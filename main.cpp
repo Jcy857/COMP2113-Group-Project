@@ -577,7 +577,6 @@ int main() {
                      previous_grid[i][j] = grid[i][j];
                 }
             }
-                
 
             if (ch == 'w') { // Move up with w
                 MoveUp();
@@ -615,7 +614,6 @@ int main() {
             if (game_over == true) {
                 break;
             }
-            
         }
         usleep(100000);
     }
