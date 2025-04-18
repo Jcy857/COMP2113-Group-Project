@@ -281,6 +281,7 @@ bool NearBySameValue(int ** & grid, int x, int y) {
         // check if lower box is same
         return true;
     return false;
+    // there is no same blocks around the cell
 }
 
 // @param grid: The game grid
