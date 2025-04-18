@@ -22,14 +22,15 @@ void SaveGame(int** & board, int Size, int score) {
         file << "\n";
     }
     file.close();
-    // Release the memory of old dynamic borad
-    for (int i = 0; i < Size; ++i) {
-         delete[] borad[i];
-         borad[i] = nullptr;
+    // Release the memory of old dynamic borad if the borad is not empty
+    if (borad != nullptr) {
+        for (int i = 0; i < Size; ++i) {
+             delete[] borad[i];
+             borad[i] = nullptr;
+        }
+        delete[] borad;
+        borad = nullptr;
     }
-    delete[] borad;
-    borad = nullptr;
-}
 
 // @param board: The game board，which is a pointer to a dynamic array of pointers
 // @param Size: The size of the board (N x N)
@@ -40,13 +41,15 @@ bool LoadGame(int** & board, int& Size, int& score) {
     string filename = "save.txt";
     ifstream file(filename);
     if (!file.is_open()) return false;
-    // Release the memory of old dynamic borad
-    for (int i = 0; i < Size; ++i) {
-         delete[] borad[i];
-         borad[i] = nullptr;
+    // Release the memory of old dynamic borad if the borad is not empty
+    if (borad != nullptr) {
+        for (int i = 0; i < Size; ++i) {
+             delete[] borad[i];
+             borad[i] = nullptr;
+        }
+        delete[] borad;
+        borad = nullptr;
     }
-    delete[] borad;
-    borad = nullptr;
     file >> score;
     file >> Size;
     // Recreate a dynamic borad with saved data
