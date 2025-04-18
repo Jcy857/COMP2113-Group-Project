@@ -290,11 +290,13 @@ bool AllNotEmpty(int ** & grid) {
     for (int i = 0; i < Size; i++){
        for (int j = 0; j < Size; j++){
            if (grid[i][j] == 0){
+               // as there is a cell 0 in grid, it is not empty
                return false;
             }
         }
     }
     return true;
+    // there is no 0 cell in grid, it is filled
 }
 
 // @param None
@@ -317,6 +319,7 @@ void AddRandom() {
              emptyblock[numberofemptyblocks].row = i;
              emptyblock[numberofemptyblocks].col = j;
              numberofemptyblocks++;
+              // return the empty blocks to the list
           }
        }
     }
@@ -343,20 +346,23 @@ void AddRandom() {
         for (int i = 0; i < Size; i++){
             for (int j = 0; j < Size; j++){
                if (NearBySameValue(grid, i, j)){
+                   // have similar blocks around for one of the cells
                    canmove = true;
-                   // player can still move and merge, the game continue
+                   // player can still move and merge
                    break;
+                   // the game can continue
                }
             }
         if (canmove){
             break;
+            // the game can continue
         }
         }
         if (!canmove){
             game_over = true;
-            // really no move, game over
+            // really no move
             return;
-       }
+            // game over
     }         
     delete[] emptyblock; // free the allocated memory
 }
@@ -552,10 +558,12 @@ bool compare_grid(int** grid, int** previous_grid, int Size) {
         for (int j = 0; j < Size; ++j) {
             if (grid[i][j] != previous_grid[i][j]) {
                 return false;
+                // one of the cell is different, the grid is different
             }
         }
     }
     return true;
+    // all cell are same, the grid is same
 }
 
 // main function
@@ -601,7 +609,9 @@ int main() {
                     consecutive_merge = 0;
                 }
                 AddRandom();
+                // add a random block
                 PrintBoard();
+                // print out the board
             }
             
             // Check Victory condition
@@ -609,7 +619,9 @@ int main() {
                 for (int i = 0; i < Size; i++){
                     for (int j = 0; j < Size; j++){
                        if (grid[i][j] == 2048) {
+                           // one of the cells contain a 2048 block
                           game_victory = true;
+                           // the player wins as it obtains 2048
                           VictoryMenu();
                        }
                     }
@@ -618,6 +630,7 @@ int main() {
 
             if (game_over == true) {
                 break;
+                // the player lose as grid is filled
             }
         }
         usleep(100000);
