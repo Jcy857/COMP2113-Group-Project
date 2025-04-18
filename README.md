@@ -7,7 +7,7 @@
 - Wu Yuzhou
 
 ## Application Description
-2048 is a single-player puzzle game played on a grid (default 4x4) with customizable difficulty options (8x8 or 12x12). Players combine tiles with identical numbers by sliding them using directional controls, aiming to create a 2048 tile. The game ends when the grid is full and no valid moves remain.
+2048 is a single-player puzzle game played on a grid (default 4x4) with customizable difficulty options (8x8 or appearance of wild block). Players combine tiles with identical numbers by sliding them using directional controls, aiming to create a 2048 tile. The game ends when the grid is full and no valid moves remain.
 
 ## Features
 -WASD Controls: Intuitive keyboard inputs for tile movement (Left/A, Right/D, Up/W, Down/S).
@@ -24,13 +24,13 @@
 
 -Data Structure Array: Arrays manage grid data and tile positions.
 
--Dynamic memory: Adjusts grid size (4x4, 8x8, 12x12) based on user-selected difficulty.
+-Dynamic memory: Adjusts grid size (4x4, 8x8,) based on user-selected difficulty.
 
 -File input and output: Save and load game states via file operations.
 
 -Program codes in multiple files: Modular codebase organized into Makefile, game_menu, save_load, and main.
 
--Multiple difficulty level: Players choose grid size (4x4, 8x8, or 12x12) to adjust challenge intensity
+-Multiple difficulty level: Players choose grid size (4x4, 8x8) to adjust challenge intensity
 
 ## Non-Standard Libraries
 - `save_load.h`
