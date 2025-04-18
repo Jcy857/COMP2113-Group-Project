@@ -22,10 +22,11 @@ void SaveGame(int** & board, int Size, int score) {
         file << "\n";
     }
     file.close();
-    // Release the memory of old dynamic borad if the borad is not empty
+    // Release the memory of old dynamic borad after the game is saved if the borad is not empty
     if (borad != nullptr) {
         for (int i = 0; i < Size; ++i) {
-             delete[] borad[i];
+            delete[] borad[i];
+            board[i] = nullptr;
         }
         delete[] borad;
         borad = nullptr;
@@ -43,7 +44,8 @@ bool LoadGame(int** & board, int& Size, int& score) {
     // Release the memory of old dynamic borad if the borad is not empty
     if (borad != nullptr) {
         for (int i = 0; i < Size; ++i) {
-             delete[] borad[i];
+            delete[] borad[i];
+            board[i] = nullptr;
         }
         delete[] borad;
         borad = nullptr;
