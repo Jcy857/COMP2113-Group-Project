@@ -18,9 +18,11 @@ bool quit = false;
 // Difficulty variable
 string difficulty;
 
-// Variable (N x N) grid
-int Size = 4;
-vector<vector<int>> grid = vector<vector<int>>(Size, vector<int>(Size, 0));
+// Declare the size of the grid
+int Size;
+
+// Declare the grid variable globally, the grid variable is a pointer to a dynamic array of pointers.
+int** grid = nullptr;
 
 // @param a: The value of the first tile
 // @param b: The value of the second tile
@@ -183,7 +185,7 @@ void MoveDown() {
 // @param y: The column index of the tile
 // @return true if there is a tile with the same value in the adjacent cells, false otherwise
 // This function checks if there is a tile with the same value in the adjacent cells
-bool NearBySameValue(const vector<vector<int>> & grid, int x, int y) {
+bool NearBySameValue(int ** & grid,, int x, int y) {
     int boxvalue = grid[x][y];
     if (x > 0 && grid[x-1][y] == boxvalue)
         // check if left box is same
@@ -203,7 +205,7 @@ bool NearBySameValue(const vector<vector<int>> & grid, int x, int y) {
 // @param grid: The game grid
 // @return true if all cells in the grid are not empty, false otherwise
 // This function checks if all cells in the grid are not empty
-bool AllNotEmpty(const vector<vector<int>>& grid) {
+bool AllNotEmpty(int ** & grid,) {
     for (int i = 0; i < Size; i++){
        for (int j = 0; j < Size; j++){
            if (grid[i][j] == 0){
@@ -218,23 +220,27 @@ bool AllNotEmpty(const vector<vector<int>>& grid) {
 // @return None
 // This function adds a random number (2 or 4) to an empty cell in the grid
 void AddRandom() {
-    vector<pair<int, int>> emptyblock;
+    // Define a new dynamic array to record the empty block in the grid
+    int ** emptyblock = new int * [Size * Size];
+    // Record the number of empty blocks
+    int numberofemptyblocks = 0;
     // make a list of empty block
     for (int i = 0; i < Size; i++){
        for (int j = 0; j < Size; j++){
           if (grid[i][j] == 0) {
-             emptyblock.push_back({i,j});
-              // finding empty block and put in list
+             // record the position and numbers of emptyblocks
+             emptyblock[numberofemptyblocks] = {i,j};
+             numberofemptyblocks++;
           }
        }
     }
     srand(time(0));
     // create different random seed
-    int randomplace = rand() % emptyblock.size();
+    int randomplace = rand() % numberofemptyblocks;
     // provide a random block in the list of empty block
-    auto& temp = emptyblock[randomplace];
-    int row = temp.first;
-    int col = temp.second;
+    int* temp = emptyblock[randomplace];
+    int row = temp[0];
+    int col = temp[1];
     int randomnum = (rand() % 2 == 0)? 2 : 4;
     // create a random number
     grid[row][col] = randomnum;
@@ -264,11 +270,22 @@ void AddRandom() {
 
 // @param None
 // @return None
-// This function initialise the grid with two random numbers and set the score to 0
+// This function initialise the grid with two random numbers and set the score to 0, the grid is a dynamic array of dynamic arraise.
 void InitializeGrid() {
-    grid = vector<vector<int>>(Size, vector<int>(Size, 0));
+    grid = new int* [Size];
+    // make grid becomes a dynamic array with Size elements, and each elements is also a pointer.
+    for (int i = 0; i < Size; ++i) {
+        grid[i] = new int[Size];
+        // each elements in grid becomes a pointer to a dynamic array with Size elements, and each elements are integers
+        for (int j = 0; j < Size; ++j) {
+            grid[i][j] = 0; 
+            // Initialize all grid cells to 0  
+        }
+    }
+    // initialise the grid and set all entrise to be zero
     AddRandom();
     AddRandom();
+    // add two random numbers in random blocks
 }
 
 // @param None
@@ -342,7 +359,7 @@ void DifficultyMenu() {
 // @return None
 // This function displays the main menu and handles user input for starting a new game, loading a game, or quitting
 void MainMenu() {
-    vector<string> MainMenuOptions = {"New Game", "Load", "Quit"}; // Main Menu
+    vector<string> MainMenuOptionsm = {"New Game", "Load", "Quit"}; // Main Menu
     int mainChoice = ShowGenericMenu("MAIN MENU", MainMenuOptions, score);
     if (mainChoice == 0) { // New Game
         score = 0;
@@ -403,8 +420,25 @@ void VictoryMenu() {
     }
 }
 
+// @param grid: The game grid
+// @param previous_grid: The saved game grid
+// @param Size: The common size of the two game grids
+// @return true if two grids are the same
+// This is the function to compare two dynamic grids is same or not
+bool compare_grid(int** grid, int** previous_grid, int Size) {
+    for (int i = 0; i < Size; ++i) {
+        for (int j = 0; j < Size; ++j) {
+            if (grid[i][j] != previous_grid[i][j]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
 /*
-bool game_over(const vector<vector<int>> & grid){
+bool game_over(){
     int i, j;
     for(i = 0; i < 4; ++i){
         for(j = 0; j < 4; ++j){
@@ -432,7 +466,16 @@ int main() {
             cin >> ch;
 
             // Save the current state of the grid to compare later
-            vector<vector<int>> previous_grid = grid;
+            int** previous_grid = new int* [Size];
+            for (int i = 0; i < Size; ++i) {
+                board[i] = new int[Size];
+            }
+            for(int i = 0; i < Size; ++i) {
+                for(int j = 0; j < Size; ++J) {
+                     previous_grid[i][j] = grid[i][j];
+                }
+            }
+                
 
             if (ch == 'w') { // Move up with w
                 MoveUp();
@@ -447,7 +490,7 @@ int main() {
             }
 
             // Check if the grid has changed; if not, continue. To prevent continue spawning blocks even if there is no movement
-            if (grid == previous_grid) {
+            if (compare_grid(grid, previous_grid, Size) {
                 continue;
             } else {
                 AddRandom();
