@@ -386,8 +386,10 @@ void InitializeGrid() {
 // This function prints the current state of the grid and the score
 void PrintBoard() {
     system("clear");
-    cout << "Score: " << score << "    Streak: " << consecutive_merge << "\n\n";
-    
+    cout << "Score: " << score << "    Streak: " << consecutive_merge << "\n";
+    cout << "Difficulty: " << difficulty << "\n";
+    cout << "Wildblock Requirement: " << wildblock_requirement << "\n\n";
+
     // Print top border
     cout << "  +";
     for (int j = 0; j < Size; j++) {
@@ -427,7 +429,6 @@ void PrintBoard() {
     cout << "\n\n";
     
     cout << "Use WASD to move, Esc for menu\n";
-
 }
 
 // @param None
@@ -461,11 +462,19 @@ void MainMenu(string error_msg = "") {
     int mainChoice = ShowGenericMenu("MAIN MENU", MainMenuOptions, score, error_msg);
     if (mainChoice == 0) { // New Game
         score = 0;
+        consecutive_merge = 0;
         game_over = false;
         game_victory = false;
         DifficultyMenu();
     } else if (mainChoice == 1) { // Load
-        if (LoadGame(grid, Size, score)) {
+        if (LoadGame(grid, Size, score, consecutive_merge, difficulty)) {
+            if (difficulty == "Easy") {
+                wildblock_requirement = 4;
+            } else if (difficulty == "Normal") {
+                wildblock_requirement = 4;
+            } else if (difficulty == "Hard") {
+                wildblock_requirement = 1000;
+            }
             // Load the game state from the file
             PrintBoard();
         } else {
@@ -486,14 +495,21 @@ void EscMenu(string error_msg = "") {
     if (choice == 0) { // Continue
         PrintBoard();
     } else if (choice == 1) { // Load
-        if (LoadGame(grid, Size, score)){
+        if (LoadGame(grid, Size, score, consecutive_merge, difficulty)){
+            if (difficulty == "Easy") {
+                wildblock_requirement = 4;
+            } else if (difficulty == "Normal") {
+                wildblock_requirement = 4;
+            } else if (difficulty == "Hard") {
+                wildblock_requirement = 1000;
+            }
             // Load the game state from the file
             PrintBoard();
         } else {
             EscMenu("No saved game available to load.");
         }
     } else if (choice == 2) { // Save
-        SaveGame(grid, Size, score);
+        SaveGame(grid, Size, score, consecutive_merge, difficulty);
         PrintBoard();
     } else if (choice == 3) { // Main Menu
         game_over = true;

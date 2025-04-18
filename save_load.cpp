@@ -9,12 +9,14 @@ using namespace std;
 // @param score: The current score
 // @return None
 // This function saves the current game state to a file named "save.txt"
-void SaveGame(int** & board, int Size, int score) {
+void SaveGame(int** & board, int Size, int score, int streak, string difficulty) {
     string filename = "save.txt";
     ofstream file(filename);
     if (!file.is_open()) return;
     file << score << "\n";
     file << Size << "\n";
+    file << streak << "\n";
+    file << difficulty << "\n";
     for (int i = 0; i < Size; i++) {
         for (int j = 0; j < Size; j++) {
             file << board[i][j] << " ";
@@ -29,7 +31,7 @@ void SaveGame(int** & board, int Size, int score) {
 // @param score: The current score
 // @return true if the game state was loaded successfully, false otherwise
 // This function loads the game state from a file named "save.txt"
-bool LoadGame(int** & board, int& Size, int& score) {
+bool LoadGame(int** & board, int& Size, int& score, int& streak, string& difficulty) {
     string filename = "save.txt";
     ifstream file(filename);
     if (!file.is_open()) return false;
@@ -46,6 +48,8 @@ bool LoadGame(int** & board, int& Size, int& score) {
     
     file >> score;
     file >> Size;
+    file >> streak;
+    file >> difficulty;
 
     // Recreate a dynamic borad with saved data
     board = new int* [Size];
