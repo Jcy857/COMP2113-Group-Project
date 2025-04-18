@@ -133,6 +133,7 @@ void MoveRight() {
         for (int s = 0; s < Size-1; s++) {
             for (int j = Size-1; j > 0; j--) {
                 if (grid[i][j] == 0) {
+                    // if the tile on the right is 0, replace the tile on the right with the number of the current tile
                     grid[i][j] = grid[i][j-1];
                     grid[i][j-1] = 0;
                     // move right for the whole board
@@ -182,6 +183,7 @@ void MoveUp() {
         for (int s = 0; s < Size-1; s++) {
             for (int i = 0; i < Size-1; i++) {
                 if (grid[i][j] == 0) {
+                    // if the tile on the upper is 0, replace the tile on the upper with the number of the current tile
                     grid[i][j] = grid[i+1][j];
                     grid[i+1][j] = 0;
                     // move up for the whole board
@@ -231,6 +233,7 @@ void MoveDown() {
         for (int s = 0; s < Size-1; s++) {
             for (int i = Size-1; i > 0; i--) {
                 if (grid[i][j] == 0) {
+                    // if the tile on the downwards is 0, replace the tile on the downwards with the number of the current tile
                     grid[i][j] = grid[i-1][j];
                     grid[i-1][j] = 0;
                     // move down for the whole board
