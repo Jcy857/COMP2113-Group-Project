@@ -23,15 +23,15 @@ void SaveGame(int** & board, int Size, int score) {
     }
     file.close();
     // Release the memory of old dynamic borad after the game is saved if the borad is not empty
-    if (borad != nullptr) {
+    if (board != nullptr) {
         for (int i = 0; i < Size; ++i) {
-            delete[] borad[i];
+            delete[] board[i];
             board[i] = nullptr;
         }
-        delete[] borad;
-        borad = nullptr;
+        delete[] board;
+        board = nullptr;
     }
-
+}
 // @param board: The game board，which is a pointer to a dynamic array of pointers
 // @param Size: The size of the board (N x N)
 // @param score: The current score
@@ -42,13 +42,13 @@ bool LoadGame(int** & board, int& Size, int& score) {
     ifstream file(filename);
     if (!file.is_open()) return false;
     // Release the memory of old dynamic borad if the borad is not empty
-    if (borad != nullptr) {
+    if (board != nullptr) {
         for (int i = 0; i < Size; ++i) {
-            delete[] borad[i];
+            delete[] board[i];
             board[i] = nullptr;
         }
-        delete[] borad;
-        borad = nullptr;
+        delete[] board;
+        board = nullptr;
     }
     file >> score;
     file >> Size;
