@@ -291,8 +291,8 @@ bool AllNotEmpty(int ** & grid) {
        for (int j = 0; j < Size; j++){
            if (grid[i][j] == 0){
                return false;
-                   }
-       }
+            }
+        }
     }
     return true;
 }
@@ -447,7 +447,7 @@ void DifficultyMenu() {
     } else if (difficultyChoice == 2) { // Hard
         difficulty = "Hard";
         Size = 4;
-        wildblock_requirement = -1;
+        wildblock_requirement = 1000;
     }
     InitializeGrid();
     PrintBoard();
