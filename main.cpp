@@ -630,15 +630,20 @@ int main() {
                 }
             }
 
-            if (ch == 'w') { // Move up with w
+            if (ch == 'w') { 
+                // Move up with w
                 MoveUp();
-            } else if (ch == 's') { // Move down with s
+            } else if (ch == 's') { 
+                // Move down with s
                 MoveDown();
-            } else if (ch == 'a') { // Move left with a
+            } else if (ch == 'a') { 
+                // move left with a
                 MoveLeft();
-            } else if (ch == 'd') { // Move right with d
+            } else if (ch == 'd') { 
+                // Move right with d
                 MoveRight();                
-            } else if (ch == 27) { // Escape key = 27
+            } else if (ch == 27) { 
+                // Escape key = 27
                 EscMenu();
             }
 

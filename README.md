@@ -7,7 +7,7 @@
 - Wu Yuzhou
 
 ## Application Description
-2048 is a single-player puzzle game played on a grid (default 4x4) with customizable difficulty options (8x8 or appearance of wild block). Players combine tiles with identical numbers by sliding them using directional controls, aiming to create a 2048 tile. The game ends when the grid is full and no valid moves remain.
+2048 is a single-player puzzle game played on a grid (default 4x4). Players combine tiles with identical numbers by sliding them using directional controls, under the aim to create a 2048 tile. The game ends when the grid is full and no valid moves remain.
 
 ## Features
 - WASD Controls: Intuitive keyboard inputs for tile movement (Left/A, Right/D, Up/W, Down/S).
@@ -17,6 +17,8 @@
 - Game Over Detection: Ends when no moves or merges are possible.
 
 - Wild Block Mechanic: Special "Wild Block" (W) tiles appear after achieving merge streaks.
+
+- Custom Difficulty Options: (8x8 and the apperaance of wild block)
 
 ## Requirements
 
