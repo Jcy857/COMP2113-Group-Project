@@ -432,6 +432,7 @@ void EscMenu() {
     } else if (choice == 1) { // Load
         for (int i = 0; i < Size; ++i){
             delete[] grid[i];
+            board[i] = nullptr;
         }
         delete[] grid;
         grid = nullptr;
@@ -455,6 +456,7 @@ void GameOverMenu() {
     if (endChoice == 0) { // Back to Main Menu
         for (int i = 0; i < Size; ++i){
             delete[] grid[i];
+            board[i] = nullptr;
         }
         delete[] grid;
         grid = nullptr;
@@ -476,7 +478,8 @@ void VictoryMenu() {
             
         if (borad != nullptr) {
             for (int i = 0; i < Size; ++i) {
-                 delete[] borad[i];
+                delete[] borad[i];
+                board[i] = nullptr;
             }
             delete[] borad;
             borad = nullptr;
