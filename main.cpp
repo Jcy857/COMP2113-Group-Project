@@ -253,8 +253,12 @@ bool AllNotEmpty(int ** & grid) {
 // @return None
 // This function adds a random number (2 or 4) to an empty cell in the grid
 void AddRandom() {
+    struct Position {
+    int row;
+    int col;
+    };
     // Define a new dynamic array to record the empty block in the grid
-    int ** emptyblock = new int * [Size * Size];
+    Position* emptyblock = new Position[Size * Size];
     // Record the number of empty blocks
     int numberofemptyblocks = 0;
     // make a list of empty block
@@ -262,7 +266,8 @@ void AddRandom() {
        for (int j = 0; j < Size; j++){
           if (grid[i][j] == 0) {
              // record the position and numbers of emptyblocks
-             emptyblock[numberofemptyblocks] = {i,j};
+             emptyblock[numberofemptyblocks].row = i;
+             emptyblock[numberofemptyblocks].col = j;
              numberofemptyblocks++;
           }
        }
@@ -272,10 +277,10 @@ void AddRandom() {
     int randomplace = rand() % numberofemptyblocks;
     // provide a random block in the list of empty block
     int* temp = emptyblock[randomplace];
-    int row = temp[0];
-    int col = temp[1];
+    int row = emptyblock[randomplace].row;
+    int col = emptyblock[randomplace].col;
     if (consequent_merge == wildblock_requirement) {
-        grid[row][col] = -1；
+        grid[row][col] = -1;
     }
     // add a wildblcok in to a random block if the player has consecutively merged for the required times
     else{
@@ -478,7 +483,7 @@ void VictoryMenu() {
             
         if (grid != nullptr) {
             for (int i = 0; i < Size; ++i) {
-                delete[] borad[i];
+                delete[] grid[i];
                 grid[i] = nullptr;
             }
             delete[] borad;
