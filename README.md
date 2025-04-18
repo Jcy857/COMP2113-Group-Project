@@ -7,13 +7,30 @@
 - Wu Yuzhou
 
 ## Application Description
-The 2048 game is a single-player puzzle game played on a grid, typically 4x4, with customizable difficulty options of 8x8 and 12x12. The objective is to combine tiles with the same number by sliding them to create a tile with the value of 2048. Players use the WASD keys to move tiles left, right, up, or down to reorder or merge them. The game ends when the grid is full and no further moves are possible.
+2048 is a single-player puzzle game played on a grid (default 4x4) with customizable difficulty options (8x8 or 12x12). Players combine tiles with identical numbers by sliding them using directional controls, aiming to create a 2048 tile. The game ends when the grid is full and no valid moves remain.
 
 ## Features
-- Standard 4x4 grid with optional 8x8 and 12x12 grids for varying difficulty
-- WASD controls for intuitive tile movement
-- Tile merging mechanics to achieve the 2048 goal
-- Game over condition when no moves are available
+-WASD Controls: Intuitive keyboard inputs for tile movement (Left/A, Right/D, Up/W, Down/S).
+
+-Tile Merging: Combine matching values to progress toward the 2048 goal.
+
+-Game Over Detection: Ends when no moves or merges are possible.
+
+-Wild Block Mechanic: Special "Wild Block" (W) tiles appear after achieving merge streaks.
+
+## Requirements
+
+-Generation of random events: Random tiles (2, 4, or W) spawn on empty grid spaces during gameplay.
+
+-Data Structure Array: Arrays manage grid data and tile positions.
+
+-Dynamic memory: Adjusts grid size (4x4, 8x8, 12x12) based on user-selected difficulty.
+
+-File input and output: Save and load game states via file operations.
+
+-Program codes in multiple files: Modular codebase organized into Makefile, game_menu, save_load, and main.
+
+-Multiple difficulty level: Players choose grid size (4x4, 8x8, or 12x12) to adjust challenge intensity
 
 ## Non-Standard Libraries
 - `save_load.h`
