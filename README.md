@@ -18,7 +18,7 @@
 
 - Wild Block Mechanic: Special "Wild Block" (W) tiles appear after achieving merge streaks.
 
-- Custom Difficulty Options: (8x8 and the apperaance of wild block)
+- Custom Difficulty Options: (8x8 and the appearance of wild block)
 
 ## Requirements
 
