@@ -26,7 +26,6 @@ void SaveGame(int** & board, int Size, int score) {
     if (borad != nullptr) {
         for (int i = 0; i < Size; ++i) {
              delete[] borad[i];
-             borad[i] = nullptr;
         }
         delete[] borad;
         borad = nullptr;
@@ -45,7 +44,6 @@ bool LoadGame(int** & board, int& Size, int& score) {
     if (borad != nullptr) {
         for (int i = 0; i < Size; ++i) {
              delete[] borad[i];
-             borad[i] = nullptr;
         }
         delete[] borad;
         borad = nullptr;
