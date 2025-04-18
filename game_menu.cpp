@@ -29,13 +29,13 @@ void RestoreInput() {
     int flags = fcntl(STDIN_FILENO, F_GETFL);
     fcntl(STDIN_FILENO, F_SETFL, flags & ~O_NONBLOCK);
     // Release the memory of old dynamic borad if the borad is not empty
-    if (borad != nullptr) {
+    if (grid != nullptr) {
         for (int i = 0; i < Size; ++i) {
-            delete[] borad[i];
-            board[i] = nullptr;
+            delete[] grid[i];
+            grid[i] = nullptr;
         }
         delete[] borad;
-        borad = nullptr;
+        grid = nullptr;
     }
 }
 
