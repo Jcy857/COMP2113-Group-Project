@@ -22,6 +22,13 @@ void SaveGame(int** & board, int Size, int score) {
         file << "\n";
     }
     file.close();
+    // Release the memory of old dynamic borad
+    for (int i = 0; i < Size; ++i) {
+         delete[] borad[i];
+         borad[i] = nullptr;
+    }
+    delete[] borad;
+    borad = nullptr;
 }
 
 // @param board: The game board，which is a pointer to a dynamic array of pointers
