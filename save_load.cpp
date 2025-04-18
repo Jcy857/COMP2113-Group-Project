@@ -33,6 +33,9 @@ bool LoadGame(int** & board, int& Size, int& score) {
     string filename = "save.txt";
     ifstream file(filename);
     if (!file.is_open()) return false;
+    file >> score;
+    file >> Size;
+
     // Release the memory of old dynamic borad if the borad is not empty
     if (board != nullptr) {
         for (int i = 0; i < Size; ++i) {
@@ -42,8 +45,7 @@ bool LoadGame(int** & board, int& Size, int& score) {
         delete[] board;
         board = nullptr;
     }
-    file >> score;
-    file >> Size;
+    
     // Recreate a dynamic borad with saved data
     board = new int* [Size];
     for (int i = 0; i < Size; ++i) {

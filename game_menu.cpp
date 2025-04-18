@@ -62,7 +62,7 @@ void SetNonBlockingInput() {
 // @param score: The current score to display
 // @return None
 // This function prints a generic menu with the title, options, selected option, and score
-void PrintGenericMenu(const string& title, const vector<string>& options, int selected, int score) {
+void PrintGenericMenu(const string& title, const vector<string>& options, int selected, int score, string error_msg) {
     system("clear");
     cout << "Score: " << score << "\n\n";
     cout << "===== " << title << " =====\n";
@@ -70,6 +70,10 @@ void PrintGenericMenu(const string& title, const vector<string>& options, int se
         cout << (selected == i ? "> " : "  ") << options[i] << "\n";
     }
     cout << "\nUse W/S to navigate, E to select\n";
+    if (!error_msg.empty()) {
+        cout << "====================================\n";
+        cout << error_msg << "\n";
+    }
 }
 
 // @param title: The title of the menu
@@ -77,9 +81,9 @@ void PrintGenericMenu(const string& title, const vector<string>& options, int se
 // @param score: The current score to display
 // @return The index of the selected option
 // This function shows a generic menu and returns the index of the selected option
-int ShowGenericMenu(const string& title, const vector<string>& options, int score) {
+int ShowGenericMenu(const string& title, const vector<string>& options, int score, string error_msg) {
     int selected = 0;
-    PrintGenericMenu(title, options, selected, score);
+    PrintGenericMenu(title, options, selected, score, error_msg);
     
     while (true) {
         if (kbhit()) {
@@ -87,10 +91,10 @@ int ShowGenericMenu(const string& title, const vector<string>& options, int scor
             cin >> ch;
             if (ch == 'w') {
                 selected = (selected - 1 + options.size()) % options.size();
-                PrintGenericMenu(title, options, selected, score);
+                PrintGenericMenu(title, options, selected, score, error_msg);
             } else if (ch == 's') {
                 selected = (selected + 1) % options.size();
-                PrintGenericMenu(title, options, selected, score);
+                PrintGenericMenu(title, options, selected, score, error_msg);
             } else if (ch == 'e') {
                 return selected;
             }

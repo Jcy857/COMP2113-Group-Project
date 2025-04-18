@@ -388,7 +388,7 @@ void PrintBoard() {
     // Print top border
     cout << "  +";
     for (int j = 0; j < Size; j++) {
-        cout << "-----+";
+        cout << "------+";
     }
     cout << "\n";
     
@@ -397,11 +397,11 @@ void PrintBoard() {
         cout << "  |";
         for (int j = 0; j < Size; j++) {
             if (grid[i][j] == 0) {
-                cout << "     |"; // Empty tile
+                cout << "      |"; // Empty tile
             } else if (grid[i][j] == -1) {
-                cout << "  w  |"; // Print w stands for wildblock
+                cout << "  w   |"; // Print w stands for wildblock
             } else {
-                cout << setw(5) << grid[i][j] << "|";
+                cout << setw(6) << grid[i][j] << "|";
             }
         }
         cout << "\n";
@@ -410,7 +410,7 @@ void PrintBoard() {
         if (i < Size - 1) {
             cout << "  +";
             for (int j = 0; j < Size; j++) {
-                cout << "-----+";
+                cout << "------+";
             }
             cout << "\n";
         }
@@ -419,7 +419,7 @@ void PrintBoard() {
     // Print bottom border
     cout << "  +";
     for (int j = 0; j < Size; j++) {
-        cout << "-----+";
+        cout << "------+";
     }
     cout << "\n\n";
     
@@ -437,15 +437,13 @@ void DifficultyMenu() {
         difficulty = "Easy";
         Size = 4;
         wildblock_requirement = 4;
-        
     } else if (difficultyChoice == 1) { // Normal
         difficulty = "Normal";
-        Size = 8;
-        wildblock_requirement = 4;
+        Size = 4;
     } else if (difficultyChoice == 2) { // Hard
         difficulty = "Hard";
-        Size = 12;
-        wildblock_requirement = 4;
+        Size = 4;
+        wildblock_requirement = 2;
     }
     InitializeGrid();
     PrintBoard();
@@ -454,17 +452,21 @@ void DifficultyMenu() {
 // @param None
 // @return None
 // This function displays the main menu and handles user input for starting a new game, loading a game, or quitting
-void MainMenu() {
+void MainMenu(string error_msg = "") {
     vector<string> MainMenuOptions = {"New Game", "Load", "Quit"}; // Main Menu
-    int mainChoice = ShowGenericMenu("MAIN MENU", MainMenuOptions, score);
+    int mainChoice = ShowGenericMenu("MAIN MENU", MainMenuOptions, score, error_msg);
     if (mainChoice == 0) { // New Game
         score = 0;
         game_over = false;
         game_victory = false;
         DifficultyMenu();
     } else if (mainChoice == 1) { // Load
-        LoadGame(grid, Size, score);
-        PrintBoard();
+        if (LoadGame(grid, Size, score)) {
+            // Load the game state from the file
+            PrintBoard();
+        } else {
+            MainMenu("No saved game available to load.");
+        }
     } else if (mainChoice == 2) { // Quit
         game_over = true;
         quit = true;
@@ -474,22 +476,18 @@ void MainMenu() {
 // @param None
 // @return None
 // This function displays the in-game menu and handles user input for continuing, loading, saving, or quitting
-void EscMenu() {
+void EscMenu(string error_msg = "") {
     vector<string> inGameMenuOptions = {"Continue", "Load", "Save", "Main Menu"};
-    int choice = ShowGenericMenu("MENU", inGameMenuOptions, score);
-    
+    int choice = ShowGenericMenu("MENU", inGameMenuOptions, score, error_msg);
     if (choice == 0) { // Continue
         PrintBoard();
     } else if (choice == 1) { // Load
-        for (int i = 0; i < Size; ++i){
-            delete[] grid[i];
-            grid[i] = nullptr;
+        if (LoadGame(grid, Size, score)){
+            // Load the game state from the file
+            PrintBoard();
+        } else {
+            EscMenu("No saved game available to load.");
         }
-        delete[] grid;
-        grid = nullptr;
-        // Release the dynamic memory before load another game
-        LoadGame(grid, Size, score);
-        PrintBoard();
     } else if (choice == 2) { // Save
         SaveGame(grid, Size, score);
         PrintBoard();
