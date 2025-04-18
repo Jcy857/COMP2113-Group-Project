@@ -31,7 +31,8 @@ void RestoreInput() {
     // Release the memory of old dynamic borad if the borad is not empty
     if (borad != nullptr) {
         for (int i = 0; i < Size; ++i) {
-             delete[] borad[i];
+            delete[] borad[i];
+            board[i] = nullptr;
         }
         delete[] borad;
         borad = nullptr;
