@@ -55,6 +55,8 @@ bool CanMerge(int a, int b) {
 // @return None
 // This function moves the tiles to the left and merges them if possible
 void MoveLeft() {
+    // record the merge times in this step
+    int Merge_this_step = 0;
   // looping through all rows
     for (int i = 0; i < Size; i++) {
       // Step 1 for row i: Compact tiles
@@ -78,6 +80,10 @@ void MoveLeft() {
                 grid[i][j] *= 2;
                 score += grid[i][j];
                 grid[i][j+1] = 0;
+                if (Merge_this_step == 0) {
+                    consequent_merge = consequent_merge + 1; // The merge time only count once for each steps
+                    Merge_this_step = 1;
+                }
             }
         }
 
@@ -97,6 +103,7 @@ void MoveLeft() {
 // @return None
 // This function moves the tiles to the right and merges them if possible
 void MoveRight() {
+    int Merge_this_step = 0;
     for (int i = 0; i < Size; i++) {
         for (int s = 0; s < Size-1; s++) {
             for (int j = Size-1; j > 0; j--) {
@@ -112,6 +119,10 @@ void MoveRight() {
                 grid[i][j] *= 2;
                 score += grid[i][j];
                 grid[i][j-1] = 0;
+                if (Merge_this_step == 0) {
+                    consequent_merge = consequent_merge + 1; // The merge time only count once for each steps
+                    Merge_this_step = 1;
+                }
             }
         }
 
@@ -130,6 +141,7 @@ void MoveRight() {
 // @return None
 // This function moves the tiles up and merges them if possible
 void MoveUp() {
+    int Merge_this_step = 0;
     for (int j = 0; j < Size; j++) {
         for (int s = 0; s < Size-1; s++) {
             for (int i = 0; i < Size-1; i++) {
@@ -145,6 +157,10 @@ void MoveUp() {
                 grid[i][j] *= 2;
                 score += grid[i][j];
                 grid[i+1][j] = 0;
+                if (Merge_this_step == 0) {
+                    consequent_merge = consequent_merge + 1; // The merge time only count once for each steps
+                    Merge_this_step = 1;
+                }
             }
         }
 
@@ -163,6 +179,7 @@ void MoveUp() {
 // @return None
 // This function moves the tiles down and merges them if possible
 void MoveDown() {
+    int Merge_this_step = 0;
     for (int j = 0; j < Size; j++) {
         for (int s = 0; s < Size-1; s++) {
             for (int i = Size-1; i > 0; i--) {
@@ -178,6 +195,10 @@ void MoveDown() {
                 grid[i][j] *= 2;
                 score += grid[i][j];
                 grid[i-1][j] = 0;
+                if (Merge_this_step == 0) {
+                    consequent_merge = consequent_merge + 1; // The merge time only count once for each steps
+                    Merge_this_step = 1;
+                }
             }
         }
 
@@ -253,10 +274,16 @@ void AddRandom() {
     int* temp = emptyblock[randomplace];
     int row = temp[0];
     int col = temp[1];
-    int randomnum = (rand() % 2 == 0)? 2 : 4;
-    // create a random number
-    grid[row][col] = randomnum;
-    // put the random number in the block
+    if (consequent_merge == wildblock_requirement) {
+        grid[row][col] = -1
+    }
+    // add a wildblcok in to a random block if the player has consecutively merged for the required times
+    else{
+        int randomnum = (rand() % 2 == 0)? 2 : 4;
+        // create a random number when the merged time doesn't fulfill the requirement
+        grid[row][col] = randomnum;
+        // put the random number in the block
+    }
     if (AllNotEmpty(grid)){
         // check if gameover when full
         bool canmove = false;
@@ -320,6 +347,8 @@ void PrintBoard() {
         for (int j = 0; j < Size; j++) {
             if (grid[i][j] == 0) {
                 cout << "     |"; // Empty tile
+            } else if (grid[i][j] == -1) {
+                cout << "  w  |"; // Print w stands for wildblock
             } else {
                 cout << setw(5) << grid[i][j] << "|";
             }
@@ -356,12 +385,16 @@ void DifficultyMenu() {
     if (difficultyChoice == 0) { // Easy
         difficulty = "Easy";
         Size = 8;
+        wildblock_requirement = 4;
+        
     } else if (difficultyChoice == 1) { // Normal
         difficulty = "Normal";
         Size = 4;
+        wildblock_requirement = 8;
     } else if (difficultyChoice == 2) { // Hard
         difficulty = "Hard";
         Size = 4;
+        wildblock_requirement = -1; // The player never can get the wildblock
     }
     InitializeGrid();
     PrintBoard();
@@ -397,6 +430,12 @@ void EscMenu() {
     if (choice == 0) { // Continue
         PrintBoard();
     } else if (choice == 1) { // Load
+        for (int i = 0; i < Size; ++i){
+            delete[] grid[i];
+        }
+        delete[] grid;
+        grid = nullptr;
+        // Release the dynamic memory before load another game
         LoadGame(grid, Size, score);
         PrintBoard();
     } else if (choice == 2) { // Save
@@ -414,6 +453,12 @@ void GameOverMenu() {
     vector<string> gameOverOptions = {"Back to Main Menu"}; // Game Over Menu
     int endChoice = ShowGenericMenu("Game Over! Final Score: " + to_string(score), gameOverOptions, score);
     if (endChoice == 0) { // Back to Main Menu
+        for (int i = 0; i < Size; ++i){
+            delete[] grid[i];
+        }
+        delete[] grid;
+        grid = nullptr;
+        // Release the dynamic memory after the game is over
         game_over = false;
     }
 }
