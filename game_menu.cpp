@@ -8,6 +8,9 @@
 using namespace std;
 struct termios orig_term;
 
+extern int** grid;
+extern int Size;
+
 // @param None
 // @return true if a key has been pressed, false otherwise
 // This function uses non-blocking I/O to check for key presses without waiting for input
@@ -34,7 +37,7 @@ void RestoreInput() {
             delete[] grid[i];
             grid[i] = nullptr;
         }
-        delete[] board;
+        delete[] grid;
         grid = nullptr;
     }
 }
