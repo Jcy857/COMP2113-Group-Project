@@ -486,7 +486,7 @@ void VictoryMenu() {
                 delete[] grid[i];
                 grid[i] = nullptr;
             }
-            delete[] borad;
+            delete[] grid;
             grid = nullptr;
         }
         // release the dynamic memory after the victor achieved and player deceide to leave
