@@ -337,6 +337,7 @@ void AddRandom() {
     else{
         int randomnum = (rand() % 2 == 0)? 2 : 4;
         // create a random number when the merged time doesn't fulfill the requirement
+        // create a 2/4 number
         grid[row][col] = randomnum;
         // put the random number in the block
     }
