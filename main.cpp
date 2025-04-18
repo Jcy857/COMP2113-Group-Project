@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include "save_load.h"
 #include "game_menu.h"
+#include <vector>
+#include <string>
 using namespace std;
 
 // Initialise score variable
