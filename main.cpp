@@ -49,6 +49,7 @@ bool CanMerge(int a, int b) {
     }
 }
 
+//
 // In the following, Movement functions: MoveLeft / MoveRight / MoveUp / MoveDown are defined
 // Each function works in a 3-step workflow
 // Step 1: the 4 Rows(Left/Right) or 4 Columns(Up/Down) are compacted with no Merge (e.g. [0 2 2 4] -> [2 2 4 0])
@@ -75,6 +76,7 @@ void MoveLeft() {
                     grid[i][j] = grid[i][j+1];
                   // current tile is set to 0
                     grid[i][j+1] = 0;
+                    // move left for the whole board
                 }
             }
         }
@@ -94,8 +96,11 @@ void MoveLeft() {
                 } else {
                     mergedValue = a * 2;
                 }
+                // return the merged value
                 grid[i][j] = mergedValue;
+                // return the merged block to the grid
                 score += mergedValue;
+                // the user get the score of the merged value
                 // the other tile is set to 0
                 grid[i][j+1] = 0;
                 if (Merge_this_step == 0) {
@@ -111,12 +116,14 @@ void MoveLeft() {
                 if (grid[i][j] == 0) {
                     grid[i][j] = grid[i][j+1];
                     grid[i][j+1] = 0;
+                    // exchange the value of two cells
                 }
             }
         }
     }
 }
 
+//
 // @param None
 // @return None
 // This function moves the tiles to the right and merges them if possible
@@ -128,6 +135,7 @@ void MoveRight() {
                 if (grid[i][j] == 0) {
                     grid[i][j] = grid[i][j-1];
                     grid[i][j-1] = 0;
+                    // move right for the whole board
                 }
             }
         }
@@ -176,6 +184,7 @@ void MoveUp() {
                 if (grid[i][j] == 0) {
                     grid[i][j] = grid[i+1][j];
                     grid[i+1][j] = 0;
+                    // move up for the whole board
                 }
             }
         }
@@ -224,6 +233,7 @@ void MoveDown() {
                 if (grid[i][j] == 0) {
                     grid[i][j] = grid[i-1][j];
                     grid[i-1][j] = 0;
+                    // move down for the whole board
                 }
             }
         }
@@ -261,6 +271,7 @@ void MoveDown() {
     }
 }
 
+//
 // @param grid: The game grid
 // @param x: The row index of the tile
 // @param y: The column index of the tile
@@ -281,8 +292,10 @@ bool NearBySameValue(int ** & grid, int x, int y) {
         // check if lower box is same
         return true;
     return false;
+    // there is no same blocks around the cell
 }
 
+//
 // @param grid: The game grid
 // @return true if all cells in the grid are not empty, false otherwise
 // This function checks if all cells in the grid are not empty
@@ -290,13 +303,16 @@ bool AllNotEmpty(int ** & grid) {
     for (int i = 0; i < Size; i++){
        for (int j = 0; j < Size; j++){
            if (grid[i][j] == 0){
+               // as there is a cell 0 in grid, it is not empty
                return false;
             }
         }
     }
     return true;
+    // there is no 0 cell in grid, it is filled
 }
 
+//
 // @param None
 // @return None
 // This function adds a random number (2 or 4) to an empty cell in the grid
@@ -317,6 +333,7 @@ void AddRandom() {
              emptyblock[numberofemptyblocks].row = i;
              emptyblock[numberofemptyblocks].col = j;
              numberofemptyblocks++;
+              // return the empty blocks to the list
           }
        }
     }
@@ -334,6 +351,7 @@ void AddRandom() {
     else{
         int randomnum = (rand() % 2 == 0)? 2 : 4;
         // create a random number when the merged time doesn't fulfill the requirement
+        // create a 2/4 number
         grid[row][col] = randomnum;
         // put the random number in the block
     }
@@ -343,24 +361,28 @@ void AddRandom() {
         for (int i = 0; i < Size; i++){
             for (int j = 0; j < Size; j++){
                if (NearBySameValue(grid, i, j)){
+                   // have similar blocks around for one of the cells
                    canmove = true;
-                   // player can still move and merge, the game continue
+                   // player can still move and merge
                    break;
+                   // the game can continue
                }
             }
         if (canmove){
             break;
+            // the game can continue
         }
         }
         if (!canmove){
             game_over = true;
-            // really no move, game over
+            // really no move
             return;
-       }
+            // game over
     }         
     delete[] emptyblock; // free the allocated memory
 }
 
+//
 // @param None
 // @return None
 // This function initialise the grid with two random numbers and set the score to 0, the grid is a dynamic array of dynamic arraise.
@@ -381,6 +403,7 @@ void InitializeGrid() {
     // add two random numbers in random blocks
 }
 
+//
 // @param None
 // @return None
 // This function prints the current state of the grid and the score
@@ -431,6 +454,7 @@ void PrintBoard() {
     cout << "Use WASD to move, Esc for menu\n";
 }
 
+//
 // @param None
 // @return None
 // This function displays the difficulty menu and sets the game difficulty
@@ -454,6 +478,7 @@ void DifficultyMenu() {
     PrintBoard();
 }
 
+//
 // @param None
 // @return None
 // This function displays the main menu and handles user input for starting a new game, loading a game, or quitting
@@ -486,6 +511,7 @@ void MainMenu(string error_msg = "") {
     }
 }
 
+//
 // @param None
 // @return None
 // This function displays the in-game menu and handles user input for continuing, loading, saving, or quitting
@@ -516,6 +542,7 @@ void EscMenu(string error_msg = "") {
     }
 }
 
+//
 // @param None
 // @return None
 // This function displays the game over menu and handles user input for continuing or quitting
@@ -534,6 +561,7 @@ void GameOverMenu() {
     }
 }
 
+//
 // @param None
 // @return None
 // This function displays the victory menu and handles user input for continuing or going back to the main menu
@@ -558,6 +586,7 @@ void VictoryMenu() {
     }
 }
 
+//
 // @param grid: The game grid
 // @param previous_grid: The saved game grid
 // @param Size: The common size of the two game grids
@@ -568,12 +597,16 @@ bool compare_grid(int** grid, int** previous_grid, int Size) {
         for (int j = 0; j < Size; ++j) {
             if (grid[i][j] != previous_grid[i][j]) {
                 return false;
+                // one of the cell is different, the grid is different
             }
         }
     }
     return true;
+    // all cell are same, the grid is same
 }
 
+
+//
 // main function
 int main() {
     SetNonBlockingInput();
@@ -617,7 +650,9 @@ int main() {
                     consecutive_merge = 0;
                 }
                 AddRandom();
+                // add a random block
                 PrintBoard();
+                // print out the board
             }
             
             // Check Victory condition
@@ -625,7 +660,9 @@ int main() {
                 for (int i = 0; i < Size; i++){
                     for (int j = 0; j < Size; j++){
                        if (grid[i][j] == 2048) {
+                           // one of the cells contain a 2048 block
                           game_victory = true;
+                           // the player wins as it obtains 2048
                           VictoryMenu();
                        }
                     }
@@ -634,6 +671,7 @@ int main() {
 
             if (game_over == true) {
                 break;
+                // the player lose as grid is filled
             }
         }
         usleep(100000);
