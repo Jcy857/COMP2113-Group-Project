@@ -597,7 +597,7 @@ int main() {
                 continue;
             } else {
                 // reset streak if no merge occurs
-                if (Merge_this_step <= 1) {
+                if (Merge_this_step == 0) {
                     consecutive_merge == 0;
                 }
                 AddRandom();
