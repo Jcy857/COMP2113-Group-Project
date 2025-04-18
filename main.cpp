@@ -19,7 +19,7 @@ bool quit = false;
 string difficulty;
 
 // Declare the size of the grid
-int Size;
+int Size = 4;
 
 // Declare the grid variable globally, the grid variable is a pointer to a dynamic array of pointers.
 int** grid = nullptr;
