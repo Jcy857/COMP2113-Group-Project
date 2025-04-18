@@ -26,8 +26,8 @@ int Size = 4;
 // Declare the grid variable globally, the grid variable is a pointer to a dynamic array of pointers.
 int** grid = nullptr;
 
-// Declare the consequent merge times variable
-int consequent_merge = 0;
+// Declare the consecutive merge times variable
+int consecutive_merge = 0;
 
 // Declare the conditions of getting wildblock 
 int wildblock_requirement = 3;
@@ -37,12 +37,12 @@ int wildblock_requirement = 3;
 // @return true if the two tiles can be merged, false otherwise
 // This function checks if two tiles can be merged
 bool CanMerge(int a, int b) {
-    if ( a == -1 or b == -1){
+    if ((a == -1 && b != 0) || (b == -1 && a != 0)) {
         return true;
     // The wildblock we give it the value of -1, and it can merge with any other blocks'
     }
     else{
-        return a == b && a != 0;
+        return (a == b && a != 0);
     }
 }
 
@@ -83,7 +83,7 @@ void MoveLeft() {
                 score += grid[i][j];
                 grid[i][j+1] = 0;
                 if (Merge_this_step == 0) {
-                    consequent_merge = consequent_merge + 1; // The merge time only count once for each steps
+                    consecutive_merge = consecutive_merge + 1; // The merge time only count once for each steps
                     Merge_this_step = 1;
                 }
             }
@@ -122,7 +122,7 @@ void MoveRight() {
                 score += grid[i][j];
                 grid[i][j-1] = 0;
                 if (Merge_this_step == 0) {
-                    consequent_merge = consequent_merge + 1; // The merge time only count once for each steps
+                    consecutive_merge = consecutive_merge + 1; // The merge time only count once for each steps
                     Merge_this_step = 1;
                 }
             }
@@ -160,7 +160,7 @@ void MoveUp() {
                 score += grid[i][j];
                 grid[i+1][j] = 0;
                 if (Merge_this_step == 0) {
-                    consequent_merge = consequent_merge + 1; // The merge time only count once for each steps
+                    consecutive_merge = consecutive_merge + 1; // The merge time only count once for each steps
                     Merge_this_step = 1;
                 }
             }
@@ -198,7 +198,7 @@ void MoveDown() {
                 score += grid[i][j];
                 grid[i-1][j] = 0;
                 if (Merge_this_step == 0) {
-                    consequent_merge = consequent_merge + 1; // The merge time only count once for each steps
+                    consecutive_merge = consecutive_merge + 1; // The merge time only count once for each steps
                     Merge_this_step = 1;
                 }
             }
@@ -281,8 +281,9 @@ void AddRandom() {
     // int* temp = emptyblock[randomplace];
     int row = emptyblock[randomplace].row;
     int col = emptyblock[randomplace].col;
-    if (consequent_merge == wildblock_requirement) {
+    if (consecutive_merge == wildblock_requirement) {
         grid[row][col] = -1;
+        consecutive_merge = 0;
     }
     // add a wildblcok in to a random block if the player has consecutively merged for the required times
     else{
@@ -340,7 +341,7 @@ void InitializeGrid() {
 // This function prints the current state of the grid and the score
 void PrintBoard() {
     system("clear");
-    cout << "Score: " << score << "    Streak: " << consequent_merge << "\n\n";
+    cout << "Score: " << score << "    Streak: " << consecutive_merge << "\n\n";
     
     // Print top border
     cout << "  +";
