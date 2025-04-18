@@ -60,6 +60,7 @@ bool CanMerge(int a, int b) {
 // @return None
 // This function moves the tiles to the left and merges them if possible
 void MoveLeft() {
+    //
     // record the merge times in this step
     Merge_this_step = 0;
   // looping through all rows
@@ -598,7 +599,7 @@ int main() {
             } else {
                 // reset streak if no merge occurs
                 if (Merge_this_step == 0) {
-                    consecutive_merge == 0;
+                    consecutive_merge = 0;
                 }
                 AddRandom();
                 PrintBoard();
