@@ -3,7 +3,7 @@
 
 #include <vector>
 
-void SaveGame(const std::vector<std::vector<int>>& board, int Size, int score);
-bool LoadGame(std::vector<std::vector<int>>& board, int& Size, int& score);
+void SaveGame(int** & board, int Size, int score);
+bool LoadGame(int** & board, int& Size, int& score);
 
 #endif
