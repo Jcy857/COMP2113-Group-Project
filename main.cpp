@@ -413,9 +413,9 @@ void InitializeGrid() {
 // This function prints the current state of the grid and the score
 void PrintBoard() {
     system("clear");
-    cout << "Score: " << score << "    Streak: " << consecutive_merge << "\n";
     cout << "Difficulty: " << difficulty << "\n";
-    cout << "Wildblock Requirement: " << wildblock_requirement << "\n\n";
+    cout << "Wildblock Requirement: " << wildblock_requirement << "\n";
+    cout << "Score: " << score << "    Streak: " << consecutive_merge << "\n\n";
 
     // Print top border
     cout << "  +";
