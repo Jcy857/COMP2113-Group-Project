@@ -431,7 +431,7 @@ void PrintBoard() {
             if (grid[i][j] == 0) {
                 cout << "      |"; // Empty tile
             } else if (grid[i][j] == -1) {
-                cout << "  w   |"; // Print w stands for wildblock
+                cout << setw(6) << "w|"; // Print w stands for wildblock
             } else {
                 cout << setw(6) << grid[i][j] << "|";
             }
